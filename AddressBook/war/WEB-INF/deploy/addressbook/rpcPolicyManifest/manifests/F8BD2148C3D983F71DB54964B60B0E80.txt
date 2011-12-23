@@ -1,0 +1,2 @@
+serviceClass: com.mauricerogers.addresbook.client.GreetingService
+path: 8FF8CE560F4FE892FE8A6DDF2E12A5FF.gwt.rpc
