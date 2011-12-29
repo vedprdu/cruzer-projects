@@ -1,0 +1,2 @@
+serviceClass: com.mauricerogers.icontact.client.DBCheckerService
+path: E86FAF59F3798A171B79FEB4CA05FBDB.gwt.rpc

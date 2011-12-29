@@ -1,0 +1,2 @@
+# Module icontact_mysql
+# RPC service class, partial path of RPC policy file
