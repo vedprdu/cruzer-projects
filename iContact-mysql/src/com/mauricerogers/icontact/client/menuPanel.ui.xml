@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		/* Add CSS here. See the GWT docs on UI Binder for more details */
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="grid_3">
+		Menu
+		<g:VerticalPanel >
+			<g:Hyperlink text="Menu Item 1" targetHistoryToken="newHistoryToken"/>
+			<g:Hyperlink text="Menu Item 2" targetHistoryToken="newHistoryToken"/>
+		</g:VerticalPanel>
+		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
+			widget names. The ui:field attribute binds an element to a field in the owner 
+			class. See the GWT docs on UI Binder for more details. -->
+		
+	</g:HTMLPanel>
+</ui:UiBinder> 
