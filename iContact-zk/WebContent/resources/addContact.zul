@@ -1,0 +1,62 @@
+<?page title="Add Contact" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Add Contact" border="none" apply="icontact.ui.AddContactCtrl">
+		<grid fixedLayout="true">
+			<columns>
+				<column width="150px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<label value="First Name" width="300px" />
+					<hlayout>
+						<textbox id="firstName" width="300px" tabbable="true" />
+					</hlayout>
+				</row>
+				<row>
+					<label value="Last Name" width="300px" />
+					<hlayout>
+						<textbox id="lastName" width="300px" tabbable="true" />
+					</hlayout>
+				</row>
+				<row>
+					Password
+					<textbox id="pwd1" type="password" width="300px" />
+				</row>
+				<row>
+					Re-type Password
+					<textbox id="pwd2" type="password" width="300px" />
+				</row>
+				<row>
+					Age:
+					<intbox constraint="no negative,no zero" width="300px" />
+				</row>
+				<row>
+					Phone:
+					<intbox constraint="no negative,no zero" width="300px" maxlength="15" />
+				</row>
+
+				<row>
+					Birthday:
+					<hbox>
+						<datebox id="db" width="300px" />
+					</hbox>
+				</row>
+				<row>
+					E-mail:
+					<textbox width="300px" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" />
+				</row>
+				<row>
+					Memo:
+					<textbox id="intro" rows="6" width="370px;" />
+				</row>
+
+				<row>
+					<cell colspan="3" style="text-align:center">
+						<button label="Submit" width="100px" height="30px" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

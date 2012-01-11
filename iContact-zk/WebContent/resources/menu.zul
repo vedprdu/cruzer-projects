@@ -1,0 +1,16 @@
+<zk >
+	<!-- Begin Menu -->
+	<menubar id="menubar" autodrop="true" orient="vertical" apply="icontact.ui.MenuCtrl" >
+		<menu label="Contact" image="/images/user.png">
+			<menupopup>
+				<menuitem label="View Contacts" image="/images/user.png" id="viewContacts" />
+				<menuitem label="Add Contact" image="/images/user_add.png" id="addContacts" />
+				<menuitem label="Edit Contact" image="/images/user_edit.png" id="editContact" />
+				<menuitem label="Remove Contact" image="/images/user_delete.png" id="removeContact" />
+			</menupopup>
+		</menu>
+
+		<menuitem label="Settings" image="/images/setting_tools.png" id="settings" />
+	</menubar>
+	<!-- End Menu -->
+</zk>

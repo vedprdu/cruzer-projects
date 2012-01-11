@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <runtime name="Apache Tomcat v6.0"/>
+  <fixed facet="org.zkoss.eclipse.project.zksupports"/>
+  <fixed facet="java"/>
+  <fixed facet="jst.web"/>
+  <installed facet="java" version="1.6"/>
+  <installed facet="jst.web" version="2.4"/>
+  <installed facet="org.zkoss.eclipse.project.zksupports" version="1.0.1"/>
+</faceted-project>

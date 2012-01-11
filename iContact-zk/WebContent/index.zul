@@ -1,0 +1,24 @@
+<?page title="Auto Generated index.zul"?>
+
+<?link rel="stylesheet" type="text/css" href="/css/960.css"?>
+
+<window border="normal" sclass="container_12" apply="icontact.ui.IndexCtrl" height="100%">
+	<borderlayout height="100%">
+		<north height="140px">
+			<div>
+				<image src="/images/logo.png" />
+			</div>
+		</north>
+		<west title="Menu" sclass="grid_3">
+			<include id="menu" src="/resources/menu.zul" />
+		</west>
+		<center sclass="grid_12">
+			<vlayout id="appArea">
+				<include id="app" src="/resources/addContact.zul" />
+			</vlayout>
+		</center>
+		<south>
+			<label value="This is the footer area" />
+		</south>
+	</borderlayout>
+</window>
