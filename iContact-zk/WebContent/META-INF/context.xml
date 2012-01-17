@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/zkManageCustomers">
+    <Resource driverClassName="com.mysql.jdbc.Driver" 
+	maxActive="4" maxIdle="2" maxWait="5000" auth="Container" 
+	name="jdbc/mysql" password="Debbiedo1" type="javax.sql.DataSource" 
+	url="jdbc:mysql://localhost:3306/icontact" username="root"/>
+</Context>
