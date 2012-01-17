@@ -18,6 +18,7 @@ public class MenuCtrl extends GenericForwardComposer
 	public void onClick$viewContacts(Event event)
 	{
 		app.setSrc("/resources/ViewContacts.zul");
+		app.setHeight("100%");
 	}
 
 	public void onClick$addContacts(Event event)

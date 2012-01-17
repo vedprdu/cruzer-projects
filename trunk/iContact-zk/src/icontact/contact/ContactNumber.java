@@ -1,62 +1,58 @@
 package icontact.contact;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ContactNumber
 {
-	String id = UUID.randomUUID().toString();
-	String title;
-	String number;
 
-	/**
-	 * @return the id
-	 */
-	public String getId()
-	{
-		return id;
-	}
+    ArrayList<String[]> contactNos = new ArrayList<String[]>();
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    public ContactNumber()
+    {
+        initData();
+    }
 
-	/**
-	 * @return the title
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
+    private void initData()
+    {
+        if (!contactNos.isEmpty())
+        {
+            contactNos.removeAll(contactNos);
+        }
 
-	/**
-	 * @param title
-	 *            the title to set
-	 */
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
+        contactNos.add(new String[]
+                {
+                    "Home", "home@home.com"
+                });
+        contactNos.add(new String[]
+                {
+                    "Work", "work@work.com"
+                });
+    }
 
-	/**
-	 * @return the number
-	 */
-	public String getNumber()
-	{
-		return number;
-	}
+    public ArrayList<String[]> revertDeletedContacts()
+    {
+        initData();
+        return getContacts();
+    }
 
-	/**
-	 * @param number
-	 *            the number to set
-	 */
-	public void setNumber(String number)
-	{
-		this.number = number;
-	}
+    public void deleteAllContacts()
+    {
+        contactNos.clear();
+    }
 
+    public void addMails(Collection c)
+    {
+        contactNos.addAll(c);
+    }
+
+    public ArrayList<String[]> getContacts()
+    {
+        return contactNos;
+    }
+
+    public void deleteContacts(Object o)
+    {
+        contactNos.remove(o);
+    }
 }
