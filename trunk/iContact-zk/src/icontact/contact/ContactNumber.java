@@ -2,11 +2,12 @@ package icontact.contact;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ContactNumber
 {
 
-    ArrayList<String[]> contactNos = new ArrayList<String[]>();
+    List<String[]> contactNos = new ArrayList<String[]>() {};
 
     public ContactNumber()
     {
@@ -30,7 +31,7 @@ public class ContactNumber
                 });
     }
 
-    public ArrayList<String[]> revertDeletedContacts()
+    public List<String[]> revertDeletedContacts()
     {
         initData();
         return getContacts();
@@ -46,7 +47,7 @@ public class ContactNumber
         contactNos.addAll(c);
     }
 
-    public ArrayList<String[]> getContacts()
+    public List<String[]> getContacts()
     {
         return contactNos;
     }
