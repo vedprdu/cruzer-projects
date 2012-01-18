@@ -11,8 +11,6 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 
-import icontact.contact.ContactNumber;
-
 public class DynamicRowRenderer implements RowRenderer
 {
 
@@ -20,12 +18,11 @@ public class DynamicRowRenderer implements RowRenderer
     public void render(final Row row, final java.lang.Object data)
     {
         String[] ary = (String[]) data;
-        row.appendChild(new Image("/img/Centigrade-Widget-Icons/EnvelopeOpen-16x16.png"));
+        row.appendChild(new Image("/images/email.png"));
         new Label(ary[0]).setParent(row);
         new Label(ary[1]).setParent(row);
-        new Label(ary[2]).setParent(row);
-        final Button rm = new Button("Delete");
-        rm.addEventListener(Events.ON_CLICK, new EventListener()
+        final Button cmdDelete = new Button();
+        cmdDelete.addEventListener(Events.ON_CLICK, new EventListener()
         {
 
             @Override
@@ -37,6 +34,7 @@ public class DynamicRowRenderer implements RowRenderer
                 row.getGrid().setModel(new ListModelList(contactData.getContacts()));
             }
         });
-        row.appendChild(rm);
+        cmdDelete.setImage("/images/delete.png");
+        row.appendChild(cmdDelete);
     }
 }

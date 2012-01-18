@@ -1,6 +1,27 @@
 <?page title="Add Contact" contentType="text/html;charset=UTF-8"?>
-<zk apply="icontact.ui.AddContactCtrl">
-    <grid fixedLayout="true">
+<zk>
+    
+    <zscript>
+        <![CDATA[
+    //Prepare Data Class
+    import icontact.contact.ContactNumber;
+     ContactNumber contactNumber;
+
+        //Save data to session for demo
+        if (session.getAttribute(ContactNumber.class.getName()) == null)
+        {
+            contactNumber = new ContactNumber();
+            session.setAttribute(ContactNumber.class.getName(), contactNumber);
+        }
+        else
+        {
+            contactNumber = (ContactNumber) session.getAttribute(ContactNumber.class.getName());
+        }
+       ListModelList model = new ListModelList(contactNumber.getContacts());
+]]>
+    </zscript>
+    
+    <grid fixedLayout="true" apply="icontact.ui.AddContactCtrl">
         <columns>
             <column width="150px" />
             <column />
@@ -28,17 +49,11 @@
 		Phone:
                 <hbox>
                     <vbox>
-                        <grid>
+                        <grid emptyMessage="No contact numbers added yet.">
                             <columns menupopup="auto">
                                 <column label="Title" sort="auto"/>
                                 <column label="Number" sort="auto"/>
                             </columns>
-                            <rows>
-                                <row>
-                                    
-                                </row>
-                            </rows>
-                            
                         </grid>
                     </vbox> 
                 </hbox>
@@ -50,24 +65,26 @@
                 
                 <hbox>
                     <vbox>
-                        <grid autopaging="true" mold="paging" vflex="true" pagingPosition="both" >
+                        <grid id="emailGrid" autopaging="true" mold="paging" vflex="true" pagingPosition="bottom"  
+                        rowRenderer="icontact.contact.DynamicRowRenderer" emptyMessage="No email added yet."
+                         model="${model}" height="200px">   
                             <columns menupopup="auto">
-                                <column label="Title" sort="auto"/>
+                                <column  width="35px" align="center"/>
+                                <column label="Title" sort="auto" width="20%" />
                                 <column label="Email" sort="auto"/>
+                                <column width="70px" align="center"/>
                             </columns>
-                            <rows>
-                                <row>	
-                                </row>
-                            </rows>
                         </grid>
         
                         <hbox  height="30px" align="center" pack="center">
                             Title: 
+                            <combobox>
+		     		<comboitem label=""/>
+	                </combobox>
                             <textbox width="150px" id="emailTitle" />
                             Email:
                             <textbox width="150px" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address"  id="emailAddress"/>
                             <button label="Add" width="100px" height="30px" image="/images/add.png" id="cmdEmailAdd"/>
-                            <button label="Remove" width="100px" height="30px" image="/images/delete.png" id="cmdEmailRemove"/>
                         </hbox>
                         
                     </vbox>
