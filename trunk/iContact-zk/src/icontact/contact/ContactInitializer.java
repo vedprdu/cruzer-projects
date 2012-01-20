@@ -11,6 +11,5 @@ package icontact.contact;
 public class ContactInitializer 
 {
 
-   
-
+ 
 }
