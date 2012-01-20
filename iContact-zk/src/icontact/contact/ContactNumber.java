@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ContactNumber
+public class ContactNumber implements Comparable<String>
 {
 
     List<String[]> contactNos = new ArrayList<String[]>() {};
@@ -55,5 +55,11 @@ public class ContactNumber
     public void deleteContacts(Object o)
     {
         contactNos.remove(o);
+    }
+
+    @Override
+    public int compareTo(String o)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -67,20 +67,17 @@
                     <vbox>
                         <grid id="emailGrid" autopaging="true" mold="paging" vflex="true" pagingPosition="bottom"  
                         rowRenderer="icontact.contact.DynamicRowRenderer" emptyMessage="No email added yet."
-                         model="${model}" height="200px">   
+                         model="${model}" height="200px" width="100%">   
                             <columns menupopup="auto">
                                 <column  width="35px" align="center"/>
-                                <column label="Title" sort="auto" width="20%" />
-                                <column label="Email" sort="auto"/>
+                                <column label="Title" width="20%" />
+                                <column label="Email"  />
                                 <column width="70px" align="center"/>
                             </columns>
                         </grid>
         
                         <hbox  height="30px" align="center" pack="center">
                             Title: 
-                            <combobox>
-		     		<comboitem label=""/>
-	                </combobox>
                             <textbox width="150px" id="emailTitle" />
                             Email:
                             <textbox width="150px" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address"  id="emailAddress"/>
