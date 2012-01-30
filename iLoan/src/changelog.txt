@@ -1,0 +1,7 @@
+
+
+Version 5.0.1
+    Completely rewritten base
+    Included Login Screen
+    Encrypted the Database Connection Information
+    
