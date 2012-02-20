@@ -14,6 +14,7 @@
   <g:form action="save" method="post" enctype="multipart/form-data" class="inputform">
     <fieldset>
       <dl>
+        <g:hiddenField name="fileId" value="${fileId}"/>
         <dt>Title <span class="requiredfield">required</span></dt>
         <dd><g:textField name="name" value="${file.name}" size="35" class="largeinput"/></dd>
         <dt>File <span class="requiredfield">required</span></dt>

@@ -3,7 +3,7 @@ package app
 class FileData {
 
     private static final int TEN_MEG_IN_BYTES = 1024*1024*10
-    static belongsTo = [file:File]
+    static belongsTo = [fileVersion:FileVersion]
     byte[] data
     
     static constraints = {
