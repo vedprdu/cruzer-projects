@@ -105,7 +105,7 @@ a img { border: 0; }
 
 #fileactions {padding-left:5px; padding-bottom:3px;}
 a.newversion:link, a.newversion:visited, a.newversion:hover{color:green; text-decoration: underline}
-.filenamesupplimentary {font-weight: normal; padding-bottom:4px; padding-left:5px; font-size:0.7em}
+.filenamesupplimentary {font-weight: normal; padding-bottom:4px; padding-left:0px; font-size:0.7em}
 
 .filebody {border-bottom: 1px lightgray solid; padding:5px}
 

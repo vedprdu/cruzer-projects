@@ -21,4 +21,9 @@ class User {
         dateCreated(nullable: true)
         lastModified(nullable: true)
     }
+    
+    def needToHash( String password ) {
+        return password != this.password
+    }
+
 }

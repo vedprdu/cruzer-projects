@@ -72,7 +72,5 @@ class AuthController {
         redirect(uri: "/")
     }
 
-    def unauthorized = {
-        render "You do not have permission to access this page."
-    }
+    def unauthorized = { }
 }

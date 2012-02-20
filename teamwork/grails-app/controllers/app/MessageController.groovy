@@ -1,7 +1,8 @@
 package app
 
 class MessageController {
-        
+    def userService
+    
     def index = 
     {
         redirect (action:"create")
@@ -13,6 +14,7 @@ class MessageController {
     
     def save = {
         def message = new Message( params )
+        message.user = userService.getAuthenticatedUser()
         if( !message.hasErrors() && message.save() ) 
         {
             flash.toUser = "Message [${message.title}] has been added."

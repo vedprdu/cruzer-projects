@@ -11,7 +11,10 @@ class UserTests extends GrailsUnitTestCase {
         super.tearDown()
     }
 
-    void testSomething() {
-
+    void testCanDetermineIfAPasswordNeedsHashing() {
+        def user = new User( password: 'oldpassword' )
+        assertTrue( user.needToHash( 'newpassword' ) )
+        assertFalse( user.needToHash( 'oldpassword' ) )
     }
+
 }
