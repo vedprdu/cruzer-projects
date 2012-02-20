@@ -17,7 +17,7 @@
         <dt>Title <span class="requiredfield">required</span></dt>
         <dd><g:textField name="name" value="${file.name}" size="35" class="largeinput"/></dd>
         <dt>File <span class="requiredfield">required</span></dt>
-        <dd><input type="file" name="data"/></dd>
+        <dd><input type="file" name="fileData.data"/></dd>
         <dt>File description <span class="requiredfield">required
         </span></dt>
         <dd><g:textArea name="description" value="${file.description}" cols="40" rows="10"/></dd>
