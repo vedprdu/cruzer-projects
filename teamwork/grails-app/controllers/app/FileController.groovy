@@ -5,32 +5,25 @@ import org.springframework.web.multipart.MultipartFile
 class FileController {
 
     def userService
+    def fileService
     
     def create = {
         return [ file: new FileVersion() ]
     }
-
+    
     def save = {
-        
-        def currentVersion = new FileVersion(params)
-        currentVersion.user = userService.getAuthenticatedUser()
-        MultipartFile f = request.getFile('fileData.data')
-        currentVersion.size = f.getSize() / 1024
-        currentVersion.extension = extractExtension(f)
-        File file
-        if(params.fileId) {
-            file = File.get( params.fileId )
-            file.versions << file.currentVersion
-            file.currentVersion = currentVersion
-        } else {
-            file = new File( currentVersion: currentVersion )
-        }
+        def multipartFile = request.getFile('fileData.data')
 
-        if (file.save()) {
-            flash.userMessage = "file [${currentVersion.name}]"
+        def file = fileService.saveNewVersion( params, multipartFile )
+        
+        if ( file.hasErrors() ) {
+            file.currentVersion.errors = file.errors
+            render(view: 'post', model: [file: file.currentVersion])
+        } 
+        
+        else {
+            flash.userMessage = "file [${file.currentVersion.name}]"
             redirect(controller: 'home')
-        } else {
-            render(view: 'post', model: [file: currentVersion])
         }
     }
     

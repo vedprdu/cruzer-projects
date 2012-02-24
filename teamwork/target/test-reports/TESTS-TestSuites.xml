@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="0" name="HomeControllerTests" package="app" tests="1" time="0.744" timestamp="2012-02-20T00:12:41">
+      <properties />
+
+      <testcase classname="app.HomeControllerTests" name="testSomething" time="0.149" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="1" name="MessageControllerTests" package="app" tests="1" time="0.197" timestamp="2012-02-20T00:12:42">
+      <properties />
+
+      <testcase classname="app.MessageControllerTests" name="testSomething" time="0.184" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="2" name="MessageTests" package="app" tests="1" time="0.032" timestamp="2012-02-20T00:12:42">
+      <properties />
+
+      <testcase classname="app.MessageTests" name="testSomething" time="0.026" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="3" name="RoleControllerTests" package="app" tests="1" time="0.218" timestamp="2012-02-20T00:12:42">
+      <properties />
+
+      <testcase classname="app.RoleControllerTests" name="testSomething" time="0.201" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="4" name="RoleTests" package="app" tests="1" time="0.048" timestamp="2012-02-20T00:12:42">
+      <properties />
+
+      <testcase classname="app.RoleTests" name="testSomething" time="0.026" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="5" name="UserControllerTests" package="app" tests="1" time="1.795" timestamp="2012-02-20T00:12:39">
+      <properties />
+
+      <testcase classname="app.UserControllerTests" name="testSomething" time="1.776" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="6" name="UserServiceTests" package="app" tests="1" time="0.796" timestamp="2012-02-20T00:12:38">
+      <properties />
+
+      <testcase classname="app.UserServiceTests" name="testSomething" time="0.644" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mrogers-PC" id="7" name="UserTests" package="app" tests="1" time="0.068" timestamp="2012-02-20T00:12:42">
+      <properties />
+
+      <testcase classname="app.UserTests" name="testCanDetermineIfAPasswordNeedsHashing" time="0.059" />
+
+      <system-out><![CDATA[--Output from testCanDetermineIfAPasswordNeedsHashing--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testCanDetermineIfAPasswordNeedsHashing--
+]]></system-err>
+
+  </testsuite>
+</testsuites>
