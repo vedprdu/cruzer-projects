@@ -8,7 +8,6 @@ import iloan.kernel.EncryptionHandler;
 import iloan.kernel.Utilities;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -248,6 +247,8 @@ public class SettingsEditor extends javax.swing.JFrame
                 properties.setProperty("dbUser", EncryptionHandler.encrypt(dbUser));
                 properties.setProperty("dbPass", EncryptionHandler.encrypt(dbPass));
                 properties.store(new FileOutputStream("conf/iLoan.properties"), "Database config settings for iLoan");
+                message = "Settings were successfully saved.";
+                Utilities.showInfoMessage(rootPane, message);
             }
             catch (Exception e)
             {

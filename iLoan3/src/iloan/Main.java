@@ -1,7 +1,11 @@
 package iloan;
 
+import iloan.customer.FrmAddCustomer;
 import iloan.kernel.Environment;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
 
 /**
@@ -10,6 +14,9 @@ import javax.swing.UIManager;
  */
 public class Main extends javax.swing.JFrame
 {
+
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+    FrmAddCustomer frmAddCustomer = null;
 
     /**
      * Creates new form Main
@@ -35,15 +42,13 @@ public class Main extends javax.swing.JFrame
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
+        customerMenu = new javax.swing.JMenu();
+        addCustomer = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("iLoan - Pawn and Loan management System");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -60,26 +65,18 @@ public class Main extends javax.swing.JFrame
 
         menuBar.add(fileMenu);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        customerMenu.setText("Customer");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
+        addCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
+        addCustomer.setText("Add Customer");
+        addCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCustomerActionPerformed(evt);
+            }
+        });
+        customerMenu.add(addCustomer);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
-
-        menuBar.add(editMenu);
+        menuBar.add(customerMenu);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -97,11 +94,15 @@ public class Main extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,6 +111,62 @@ public class Main extends javax.swing.JFrame
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void addCustomerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addCustomerActionPerformed
+    {//GEN-HEADEREND:event_addCustomerActionPerformed
+        //Verify if the form is already loaded
+        boolean AlreadyLoaded = isLoaded("Add Customer");
+        if (AlreadyLoaded == false)
+        {
+            frmAddCustomer = new FrmAddCustomer();
+            desktopPane.add(frmAddCustomer);
+            //Load the Form
+            frmAddCustomer.setVisible(true);
+            frmAddCustomer.show();
+            try
+            {
+                frmAddCustomer.setIcon(false);
+                frmAddCustomer.setSelected(true);
+            }
+            catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Error displaying the form.", e);
+            }
+        }
+    }//GEN-LAST:event_addCustomerActionPerformed
+
+    /**
+     * This function checks if a specified form is already displayed. It accepts
+     * the window title in the form of a string and checks if it is already
+     * loaded onto the desktop pane. It then returns a boolean depending on the
+     * result of the test.
+     *
+     * @param FormTitle
+     * @return True if a loaded frame contains the specified string in title.
+     * False if no frames contains the specified string.
+     */
+    protected boolean isLoaded(String FormTitle)
+    {
+        JInternalFrame Form[] = desktopPane.getAllFrames();
+        for (int i = 0; i < Form.length; i++)
+        {
+            if (Form[i].getTitle().equalsIgnoreCase(FormTitle))
+            {
+                Form[i].show();
+                try
+                {
+                    Form[i].setIcon(false);
+                    Form[i].setSelected(true);
+                }
+                catch (Exception e)
+                {
+                    logger.log(Level.SEVERE, "Error displaying form.", e);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @param args the command line arguments
@@ -127,6 +184,14 @@ public class Main extends javax.swing.JFrame
             };
             UIManager.put("Synthetica.license.info", li);
             UIManager.put("Synthetica.license.key", "2BCF99E0-3738913D-F30B5EC9-622511CC-4F19572A");
+
+            String[] li2 =
+            {
+                "Licensee=JYLOO Software", "LicenseRegistrationNumber=------", "Product=SyntheticaAddons", "LicenseType=For internal tests only", "ExpireDate=--.--.----", "MaxVersion=1.999.999"
+            };
+            UIManager.put("SyntheticaAddons.license.info", li2);
+            UIManager.put("SyntheticaAddons.license.key", "CC98A980-13381C7D-30604C91-F5BC5376-776C6006");
+
             javax.swing.UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel");
         }
         catch (ClassNotFoundException ex)
@@ -173,15 +238,12 @@ public class Main extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JMenuItem addCustomer;
+    private javax.swing.JMenu customerMenu;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem pasteMenuItem;
     // End of variables declaration//GEN-END:variables
 }

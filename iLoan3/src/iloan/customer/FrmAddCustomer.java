@@ -4,6 +4,9 @@
  */
 package iloan.customer;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author mrogers
@@ -17,6 +20,14 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     public FrmAddCustomer()
     {
         initComponents();
+        populateLists();
+    }
+
+    private void populateLists()
+    {
+        ArrayList<String> salutationList = Customer.getSalutationList();
+        salutationList.add(0, "--- Select One ---");
+        cmbSalutation.setModel(new DefaultComboBoxModel(salutationList.toArray()));
     }
 
     /**
@@ -28,17 +39,29 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        customerTabbedPane = new javax.swing.JTabbedPane();
+        generalPanel = new javax.swing.JPanel();
+        lblFirstName = new javax.swing.JLabel();
+        lblLastName = new javax.swing.JLabel();
+        txtFirstName = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
+        lblSalutation = new javax.swing.JLabel();
+        cmbSalutation = new javax.swing.JComboBox();
+        lblOtherName = new javax.swing.JLabel();
+        txtOtherName = new javax.swing.JTextField();
+        lblDOB = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        telephonePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        addressPanel = new javax.swing.JPanel();
 
         setClosable(true);
         setIconifiable(true);
@@ -47,69 +70,132 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         setTitle("Add Customer");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
 
-        jLabel1.setText("First Name:");
+        lblFirstName.setText("First Name:");
 
-        jLabel2.setText("Last Name:");
+        lblLastName.setText("Last Name:");
 
-        jLabel3.setText("Salutation:");
+        lblSalutation.setText("Salutation:");
 
-        jLabel4.setText("Other Name:");
+        lblOtherName.setText("Other Name:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        lblDOB.setText("D.O.B.:");
+
+        javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
+        generalPanel.setLayout(generalPanelLayout);
+        generalPanelLayout.setHorizontalGroup(
+            generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFirstName)
+                    .addComponent(lblLastName)
+                    .addComponent(lblSalutation)
+                    .addComponent(lblOtherName)
+                    .addComponent(lblDOB))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtOtherName)
+                    .addComponent(cmbSalutation, 0, 282, Short.MAX_VALUE)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        generalPanelLayout.setVerticalGroup(
+            generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(generalPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSalutation)
+                    .addComponent(cmbSalutation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFirstName)
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLastName)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblOtherName)
+                    .addComponent(txtOtherName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lblDOB)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(216, Short.MAX_VALUE))
+        );
+
+        customerTabbedPane.addTab("General", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user.png")), generalPanel); // NOI18N
+
+        jLabel1.setText("Landline:");
+
+        jLabel2.setText("Mobile:");
+
+        jLabel3.setText("Email:");
+
+        jLabel4.setText("Address:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout telephonePanelLayout = new javax.swing.GroupLayout(telephonePanel);
+        telephonePanel.setLayout(telephonePanelLayout);
+        telephonePanelLayout.setHorizontalGroup(
+            telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telephonePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                     .addComponent(jTextField3)
-                    .addComponent(jComboBox1, 0, 336, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField1))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        telephonePanelLayout.setVerticalGroup(
+            telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telephonePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(309, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("General", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user.png")), jPanel1); // NOI18N
+        customerTabbedPane.addTab("Contact Info", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/house.png")), telephonePanel); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 451, Short.MAX_VALUE)
+        javax.swing.GroupLayout addressPanelLayout = new javax.swing.GroupLayout(addressPanel);
+        addressPanel.setLayout(addressPanelLayout);
+        addressPanelLayout.setHorizontalGroup(
+            addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+        addressPanelLayout.setVerticalGroup(
+            addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 362, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Contact Info", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/house.png")), jPanel2); // NOI18N
+        customerTabbedPane.addTab("Occupation", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/building.png")), addressPanel); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,30 +203,42 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(customerTabbedPane)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(customerTabbedPane)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JPanel addressPanel;
+    private javax.swing.JComboBox cmbSalutation;
+    private javax.swing.JTabbedPane customerTabbedPane;
+    private javax.swing.JPanel generalPanel;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblDOB;
+    private javax.swing.JLabel lblFirstName;
+    private javax.swing.JLabel lblLastName;
+    private javax.swing.JLabel lblOtherName;
+    private javax.swing.JLabel lblSalutation;
+    private javax.swing.JPanel telephonePanel;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtOtherName;
     // End of variables declaration//GEN-END:variables
 }

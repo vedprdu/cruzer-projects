@@ -31,7 +31,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="customerTabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -40,24 +40,136 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="customerTabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="customerTabbedPane">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="generalPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="General">
                 <Property name="tabTitle" type="java.lang.String" value="General"/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/iloan/resources/user.png"/>
+                </Property>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFirstName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLastName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSalutation" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblOtherName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDOB" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtOtherName" max="32767" attributes="0"/>
+                          <Component id="cmbSalutation" pref="282" max="32767" attributes="0"/>
+                          <Component id="txtFirstName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="txtLastName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jDateChooser1" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblSalutation" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbSalutation" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtFirstName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblOtherName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtOtherName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="lblDOB" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDateChooser1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="216" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblFirstName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="First Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblLastName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Last Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtFirstName">
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtLastName">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblSalutation">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salutation:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cmbSalutation">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblOtherName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Other Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtOtherName">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDOB">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="D.O.B.:"/>
+              </Properties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="telephonePanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Contact Info">
+                <Property name="tabTitle" type="java.lang.String" value="Contact Info"/>
+                <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/iloan/resources/house.png"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>
@@ -76,10 +188,10 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" pref="305" max="32767" attributes="0"/>
                           <Component id="jTextField3" max="32767" attributes="0"/>
-                          <Component id="jComboBox1" pref="336" max="32767" attributes="0"/>
-                          <Component id="jTextField1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField2" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField2" max="32767" attributes="0"/>
+                          <Component id="jTextField1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -88,11 +200,6 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -105,10 +212,15 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="309" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="184" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -116,46 +228,54 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="First Name:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Last Name:"/>
+                <Property name="text" type="java.lang.String" value="Landline:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField1">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mobile:"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField2">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Salutation:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Other Name:"/>
+                <Property name="text" type="java.lang.String" value="Email:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField3">
             </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Address:"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="jTextArea1">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="addressPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Contact Info">
-                <Property name="tabTitle" type="java.lang.String" value="Contact Info"/>
+              <JTabbedPaneConstraints tabName="Occupation">
+                <Property name="tabTitle" type="java.lang.String" value="Occupation"/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iloan/resources/house.png"/>
+                  <Image iconType="3" name="/iloan/resources/building.png"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>
@@ -164,12 +284,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="451" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="397" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="427" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="362" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
