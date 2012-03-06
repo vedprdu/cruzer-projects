@@ -26,6 +26,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="customerMenu">
           <Properties>
+            <Property name="mnemonic" type="int" value="67"/>
             <Property name="text" type="java.lang.String" value="Customer"/>
           </Properties>
           <SubComponents>
@@ -34,6 +35,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/iloan/resources/user_add.png"/>
                 </Property>
+                <Property name="mnemonic" type="int" value="65"/>
                 <Property name="text" type="java.lang.String" value="Add Customer"/>
               </Properties>
               <Events>
@@ -85,17 +87,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="desktopPane" min="-2" pref="788" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="desktopPane" pref="788" max="32767" attributes="0"/>
+                  <Component id="statusBar" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="desktopPane" min="-2" pref="542" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="desktopPane" pref="511" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="statusBar" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,6 +110,16 @@
     <Container class="javax.swing.JDesktopPane" name="desktopPane">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
+    </Container>
+    <Container class="org.jdesktop.swingx.JXStatusBar" name="statusBar">
+      <Properties>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[27, 25]"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="    //do not add separators automatically&#xa;    statusBar.putClientProperty(BasicStatusBarUI.AUTO_ADD_SEPARATOR, Boolean.FALSE);&#xa;    statusBar.add(StatusHandlers.taskLabel);&#xa;    //use dummy label to fill empty space&#xa;    statusBar.add(new JLabel(&quot;&quot;), JXStatusBar.Constraint.ResizeBehavior.FILL);&#xa;    //create constraint to add space of 5 at components left and right side &#xa;    JXStatusBar.Constraint ct = new JXStatusBar.Constraint(new Insets(0, 5, 0, 5));&#xa;    //statusBar.add(new JSeparator(JSeparator.VERTICAL), ct);&#xa;    //statusBar.add(new JLabel(&quot;INS&quot;), ct);&#xa;    statusBar.add(new JSeparator(JSeparator.VERTICAL), ct);&#xa;    //statusBar.add(new JLabel(&quot;Load&quot;), ct);&#xa;    JProgressBar progressBar = StatusHandlers.progressBar;&#xa;    //use statusbar style if available&#xa;    progressBar.setName(&quot;StatusProgressBar&quot;);    &#xa;    statusBar.add(progressBar);&#xa;    //add the statusbar to the rootPane - some themes require this for proper appearance&#xa;    getRootPane().putClientProperty(&quot;Synthetica.statusBar&quot;, statusBar);    "/>
+      </AuxValues>
     </Container>
   </SubComponents>
 </Form>

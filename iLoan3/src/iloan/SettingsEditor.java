@@ -42,11 +42,9 @@ public class SettingsEditor extends javax.swing.JFrame
         try
         {
             properties.load(new FileInputStream("conf/iLoan.properties"));
-            String dbDriver = EncryptionHandler.decrypt(properties.getProperty("dbDriver"));
             String dbLocation = EncryptionHandler.decrypt(properties.getProperty("dbLocation"));
             String dbUser = EncryptionHandler.decrypt(properties.getProperty("dbUser"));
             String dbPass = EncryptionHandler.decrypt(properties.getProperty("dbPass"));
-
             txtUser.setText(dbUser);
             txtPassword.setText(dbPass);
             dbLocation = dbLocation.substring(13);
@@ -67,8 +65,8 @@ public class SettingsEditor extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private void initComponents()
+    {
         lblImage = new javax.swing.JLabel();
         lblTitle = new javax.swing.JLabel();
         lblServer = new javax.swing.JLabel();
@@ -82,127 +80,121 @@ public class SettingsEditor extends javax.swing.JFrame
         cmdClose = new javax.swing.JButton();
         cmdSave = new javax.swing.JButton();
         cmdTestConn = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iLoan Database Settings Editor");
-
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/Logo-No-BG.png"))); // NOI18N
-
         lblTitle.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Database Settings Editor");
-
         lblServer.setText("Server Name / IP:");
-
         lblDatabase.setText("Database Name:");
-
         lblUser.setText("User:");
-
         lblPassword.setText("Password:");
-
         cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/cross.png"))); // NOI18N
         cmdClose.setText("Close");
-        cmdClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdClose.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdCloseActionPerformed(evt);
             }
         });
-
         cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/accept.png"))); // NOI18N
         cmdSave.setText("Save");
-        cmdSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdSave.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdSaveActionPerformed(evt);
             }
         });
-
         cmdTestConn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/connect.png"))); // NOI18N
         cmdTestConn.setText("Test Connection");
-        cmdTestConn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdTestConn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdTestConnActionPerformed(evt);
             }
         });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblServer)
-                            .addComponent(lblDatabase)
-                            .addComponent(lblUser)
-                            .addComponent(lblPassword))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtUser, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtDatabase)
-                            .addComponent(txtServer)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cmdTestConn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdClose)))
-                .addContainerGap())
+                      .addContainerGap()
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                  .addComponent(lblServer)
+                                                  .addComponent(lblDatabase)
+                                                  .addComponent(lblUser)
+                                                  .addComponent(lblPassword))
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                  .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                  .addComponent(txtUser, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                  .addComponent(txtDatabase)
+                                                  .addComponent(txtServer)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                          .addComponent(cmdTestConn)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                          .addComponent(cmdSave)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                          .addComponent(cmdClose)))
+                      .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTitle)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblServer)
-                    .addComponent(txtServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDatabase)
-                    .addComponent(txtDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUser))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdClose)
-                    .addComponent(cmdSave)
-                    .addComponent(cmdTestConn))
-                .addContainerGap())
+                      .addContainerGap()
+                      .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(lblTitle)
+                      .addGap(18, 18, 18)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblServer)
+                                .addComponent(txtServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblDatabase)
+                                .addComponent(txtDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblUser))
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblPassword))
+                      .addGap(18, 18, Short.MAX_VALUE)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmdClose)
+                                .addComponent(cmdSave)
+                                .addComponent(cmdTestConn))
+                      .addContainerGap())
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdCloseActionPerformed
-    {//GEN-HEADEREND:event_cmdCloseActionPerformed
+    {
+//GEN-HEADEREND:event_cmdCloseActionPerformed
         System.exit(0);
     }//GEN-LAST:event_cmdCloseActionPerformed
 
     private void cmdTestConnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdTestConnActionPerformed
-    {//GEN-HEADEREND:event_cmdTestConnActionPerformed
-
+    {
+//GEN-HEADEREND:event_cmdTestConnActionPerformed
         String dbDriver = "com.mysql.jdbc.Driver";
         String dbServer = txtServer.getText().trim();
         String dbName = txtDatabase.getText().trim();
         String dbLocation = "jdbc:mysql://" + dbServer + "/" + dbName;
         String dbUser = txtUser.getText().trim();
         String dbPass = String.valueOf(txtPassword.getPassword());
-
         //Try to connect to the database
         try
         {
@@ -216,20 +208,20 @@ public class SettingsEditor extends javax.swing.JFrame
         catch (Exception ex)
         {
             String message = "An error occurred while connecting to the database.\n"
-                    + "Kindly check with your system administrator.";
+                             + "Kindly check with your system administrator.";
             Utilities.showErrorMessage(rootPane, message);
         }
     }//GEN-LAST:event_cmdTestConnActionPerformed
 
     private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdSaveActionPerformed
-    {//GEN-HEADEREND:event_cmdSaveActionPerformed
+    {
+//GEN-HEADEREND:event_cmdSaveActionPerformed
         if (!connectionTested)
         {
             String message = "Kindly test the connection setting you have entered before saving.";
             Utilities.showWarningMessage(rootPane, message);
             return;
         }
-
         String message = "Are you sure you want to save these changes to the config file?";
         int response = Utilities.showConfirmDialog(rootPane, message);
         if (response == JOptionPane.YES_OPTION)
@@ -240,7 +232,6 @@ public class SettingsEditor extends javax.swing.JFrame
             String dbLocation = "jdbc:mysql://" + dbServer + "/" + dbName;
             String dbUser = txtUser.getText().trim();
             String dbPass = String.valueOf(txtPassword.getPassword());
-
             try
             {
                 properties.setProperty("dbLocation", EncryptionHandler.encrypt(dbLocation));
@@ -253,8 +244,8 @@ public class SettingsEditor extends javax.swing.JFrame
             catch (Exception e)
             {
                 message = "An error occurred."
-                        + "\nCould not read the application's settings."
-                        + "\n\nKindly consult the system administrator.";
+                          + "\nCould not read the application's settings."
+                          + "\n\nKindly consult the system administrator.";
                 Utilities.showErrorMessage(rootPane, message);
             }
         }
@@ -265,9 +256,7 @@ public class SettingsEditor extends javax.swing.JFrame
      */
     public static void main(String args[])
     {
-
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
-
         try
         {
             String[] li =
@@ -295,13 +284,11 @@ public class SettingsEditor extends javax.swing.JFrame
             java.util.logging.Logger.getLogger(SettingsEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /*
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             @Override
             public void run()
             {

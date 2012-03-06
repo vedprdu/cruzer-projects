@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,10 +38,10 @@ public class Environment
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(mainFrame,
-                    "An error occurred."
-                    + "\nCould not read the application's settings."
-                    + "\n\nKindly consult the system administrator.",
-                    "iLoan", JOptionPane.ERROR_MESSAGE);
+                                          "An error occurred."
+                                          + "\nCould not read the application's settings."
+                                          + "\n\nKindly consult the system administrator.",
+                                          "iLoan", JOptionPane.ERROR_MESSAGE);
             String message = "The properties file could not be read.";
             logger.log(Level.SEVERE, message, e);
             System.exit(1);
@@ -59,8 +60,6 @@ public class Environment
         String dbLocation = EncryptionHandler.decrypt(properties.getProperty("dbLocation"));
         String dbUser = EncryptionHandler.decrypt(properties.getProperty("dbUser"));
         String dbPass = EncryptionHandler.decrypt(properties.getProperty("dbPass"));
-         
-        
         //Try to connect to the database
         try
         {
@@ -75,7 +74,7 @@ public class Environment
             String message = "ERROR: The driver specified could not be found.";
             logger.log(Level.SEVERE, message, cnfEx);
             message = "An error occurred while connecting to the database.\n"
-                    + "Kindly check with your system administrator.";
+                      + "Kindly check with your system administrator.";
             Utilities.showErrorMessage(null, message);
             System.exit(0);
         }
@@ -84,7 +83,7 @@ public class Environment
             String message = "ERROR: Could not connect to the database.";
             logger.log(Level.SEVERE, message, sqlEx);
             message = "An error occurred while connecting to the database.\n"
-                    + "Kindly check your connection and consult with your system administrator.";
+                      + "Kindly check your connection and consult with your system administrator.";
             Utilities.showErrorMessage(null, message);
             System.exit(0);
         }
@@ -93,7 +92,7 @@ public class Environment
             String message = "ERROR: Could not connect to the database.";
             logger.log(Level.SEVERE, message, e);
             message = "An error occurred while connecting to the database.\n"
-                    + "Kindly check with your system administrator.";
+                      + "Kindly check with your system administrator.";
             Utilities.showErrorMessage(null, message);
             System.exit(0);
         }
@@ -111,7 +110,7 @@ public class Environment
         if (foundDBVersion < minimumDBVersion)
         {
             String message = "The database was meant to be used with another version of this application.\n"
-                    + "To protect your data, the program will now exit.";
+                             + "To protect your data, the program will now exit.";
             logger.log(Level.SEVERE, message);
             Utilities.showErrorMessage(null, message);
             System.exit(0);
@@ -144,12 +143,11 @@ public class Environment
         long waitTime = (long) (timeout * 60 * 1000);
         TimerTask logOff = new TimerTask()
         {
-
             @Override
             public void run()
             {
                 String message = "You have been idle for " + timeout + " minutes.\n"
-                        + "The program will now close.";
+                                 + "The program will now close.";
                 Utilities.showInfoMessage(null, message);
                 System.exit(0);
             }
@@ -205,5 +203,38 @@ public class Environment
     public static void setMainFrame(JFrame aMainFrame)
     {
         mainFrame = aMainFrame;
+    }
+
+    /**
+     * This function checks if a specified form is already displayed. It accepts
+     * the window title in the form of a string and checks if it is already
+     * loaded onto the desktop pane. It then returns a boolean depending on the
+     * result of the test.
+     *
+     * @param FormTitle
+     * @return True if a loaded frame contains the specified string in title.
+     * False if no frames contains the specified string.
+     */
+    protected boolean isFormLoaded(String FormTitle)
+    {
+        JInternalFrame Form[] = desktopPane.getAllFrames();
+        for (int i = 0; i < Form.length; i++)
+        {
+            if (Form[i].getTitle().equalsIgnoreCase(FormTitle))
+            {
+                Form[i].show();
+                try
+                {
+                    Form[i].setIcon(false);
+                    Form[i].setSelected(true);
+                }
+                catch (Exception e)
+                {
+                    logger.log(Level.SEVERE, "Error displaying form.", e);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

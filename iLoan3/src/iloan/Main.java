@@ -2,11 +2,14 @@ package iloan;
 
 import iloan.customer.FrmAddCustomer;
 import iloan.kernel.Environment;
+import iloan.kernel.StatusHandlers;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JInternalFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
+import org.jdesktop.swingx.JXStatusBar;
+import org.jdesktop.swingx.plaf.basic.BasicStatusBarUI;
 
 /**
  *
@@ -24,9 +27,9 @@ public class Main extends javax.swing.JFrame
     public Main()
     {
         setupEnvironment();
-
         initComponents();
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("images/ruby.png"));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -36,9 +39,10 @@ public class Main extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private void initComponents()
+    {
         desktopPane = new javax.swing.JDesktopPane();
+        statusBar = new org.jdesktop.swingx.JXStatusBar();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -46,74 +50,90 @@ public class Main extends javax.swing.JFrame
         addCustomer = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iLoan - Pawn and Loan management System");
-
+        statusBar.setPreferredSize(new java.awt.Dimension(27, 25));
+        //do not add separators automatically
+        statusBar.putClientProperty(BasicStatusBarUI.AUTO_ADD_SEPARATOR, Boolean.FALSE);
+        statusBar.add(StatusHandlers.taskLabel);
+        //use dummy label to fill empty space
+        statusBar.add(new JLabel(""), JXStatusBar.Constraint.ResizeBehavior.FILL);
+        //create constraint to add space of 5 at components left and right side
+        JXStatusBar.Constraint ct = new JXStatusBar.Constraint(new Insets(0, 5, 0, 5));
+        //statusBar.add(new JSeparator(JSeparator.VERTICAL), ct);
+        //statusBar.add(new JLabel("INS"), ct);
+        statusBar.add(new JSeparator(JSeparator.VERTICAL), ct);
+        //statusBar.add(new JLabel("Load"), ct);
+        JProgressBar progressBar = StatusHandlers.progressBar;
+        //use statusbar style if available
+        progressBar.setName("StatusProgressBar");
+        statusBar.add(progressBar);
+        //add the statusbar to the rootPane - some themes require this for proper appearance
+        getRootPane().putClientProperty("Synthetica.statusBar", statusBar);
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
-
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/door_out.png"))); // NOI18N
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 exitMenuItemActionPerformed(evt);
             }
         });
         fileMenu.add(exitMenuItem);
-
         menuBar.add(fileMenu);
-
+        customerMenu.setMnemonic('C');
         customerMenu.setText("Customer");
-
         addCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
+        addCustomer.setMnemonic('A');
         addCustomer.setText("Add Customer");
-        addCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addCustomer.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 addCustomerActionPerformed(evt);
             }
         });
         customerMenu.add(addCustomer);
-
         menuBar.add(customerMenu);
-
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
-
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/information.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
-
         menuBar.add(helpMenu);
-
         setJMenuBar(menuBar);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                                .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                      .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                      .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_exitMenuItemActionPerformed
+    {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void addCustomerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_addCustomerActionPerformed
-    {//GEN-HEADEREND:event_addCustomerActionPerformed
+    {
+//GEN-HEADEREND:event_addCustomerActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Add Customer");
         if (AlreadyLoaded == false)
@@ -173,9 +193,7 @@ public class Main extends javax.swing.JFrame
      */
     public static void main(String args[])
     {
-
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
-
         try
         {
             String[] li =
@@ -184,14 +202,12 @@ public class Main extends javax.swing.JFrame
             };
             UIManager.put("Synthetica.license.info", li);
             UIManager.put("Synthetica.license.key", "2BCF99E0-3738913D-F30B5EC9-622511CC-4F19572A");
-
             String[] li2 =
             {
                 "Licensee=JYLOO Software", "LicenseRegistrationNumber=------", "Product=SyntheticaAddons", "LicenseType=For internal tests only", "ExpireDate=--.--.----", "MaxVersion=1.999.999"
             };
             UIManager.put("SyntheticaAddons.license.info", li2);
             UIManager.put("SyntheticaAddons.license.key", "CC98A980-13381C7D-30604C91-F5BC5376-776C6006");
-
             javax.swing.UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel");
         }
         catch (ClassNotFoundException ex)
@@ -211,13 +227,11 @@ public class Main extends javax.swing.JFrame
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /*
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             @Override
             public void run()
             {
@@ -245,5 +259,6 @@ public class Main extends javax.swing.JFrame
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
+    private org.jdesktop.swingx.JXStatusBar statusBar;
     // End of variables declaration//GEN-END:variables
 }
