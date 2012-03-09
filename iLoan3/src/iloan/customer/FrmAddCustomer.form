@@ -50,7 +50,7 @@
     <Container class="javax.swing.JTabbedPane" name="customerTabbedPane">
       <Properties>
         <Property name="tabLayoutPolicy" type="int" value="1"/>
-        <Property name="toolTipText" type="java.lang.String" value="Closes this window without saving any changes."/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
@@ -251,7 +251,7 @@
                     <StringItem index="2" value="Female"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Which gender tdoes the customer belong to?"/>
+                <Property name="toolTipText" type="java.lang.String" value="Which gender does the customer belong to?"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblGender">
@@ -577,7 +577,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtWorkEmail">
               <Properties>
-                <Property name="toolTipText" type="java.lang.String" value="the customer&apos;s work email address."/>
+                <Property name="toolTipText" type="java.lang.String" value="The customer&apos;s work email address."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblWorkAddress">
@@ -835,6 +835,8 @@
             <Component class="javax.swing.JTextField" name="txtPicture">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="toolTipText" type="java.lang.String" value="This is the location of the image that will be used."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="cmdBrowse">

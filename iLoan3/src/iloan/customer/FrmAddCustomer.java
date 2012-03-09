@@ -190,7 +190,7 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
 
         customerTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        customerTabbedPane.setToolTipText("Closes this window without saving any changes.");
+        customerTabbedPane.setToolTipText("");
 
         lblFirstName.setText("First Name:*");
 
@@ -233,7 +233,7 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         });
 
         cmbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--- Select One ---", "Male", "Female" }));
-        cmbGender.setToolTipText("Which gender tdoes the customer belong to?");
+        cmbGender.setToolTipText("Which gender does the customer belong to?");
 
         lblGender.setText("Gender:*");
 
@@ -440,7 +440,7 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
 
         lblWorkEmail.setText("Email:");
 
-        txtWorkEmail.setToolTipText("the customer's work email address.");
+        txtWorkEmail.setToolTipText("The customer's work email address.");
 
         lblWorkAddress.setText("Address:");
 
@@ -615,6 +615,8 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         lblPicture.setText("ID Picture:");
 
         txtPicture.setEditable(false);
+        txtPicture.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtPicture.setToolTipText("This is the location of the image that will be used.");
 
         cmdBrowse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/picture_link.png"))); // NOI18N
         cmdBrowse.setText("Browse");
