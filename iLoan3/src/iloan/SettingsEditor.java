@@ -192,7 +192,7 @@ public class SettingsEditor extends javax.swing.JFrame
         String dbDriver = "com.mysql.jdbc.Driver";
         String dbServer = txtServer.getText().trim();
         String dbName = txtDatabase.getText().trim();
-        String dbLocation = "jdbc:mysql://" + dbServer + "/" + dbName;
+        String dbLocation = "jdbc:mysql://" + dbServer + "/" + dbName+"?autoreconnect=true";
         String dbUser = txtUser.getText().trim();
         String dbPass = String.valueOf(txtPassword.getPassword());
         //Try to connect to the database
