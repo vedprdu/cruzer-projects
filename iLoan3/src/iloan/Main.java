@@ -4,6 +4,7 @@ import iloan.customer.FrmAddCustomer;
 import iloan.kernel.Environment;
 import iloan.kernel.StatusHandlers;
 import iloan.utilities.FrmIdTypes;
+import iloan.utilities.FrmOccupationList;
 import iloan.utilities.FrmSalutationList;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -24,6 +25,7 @@ public class Main extends javax.swing.JFrame
     FrmAddCustomer frmAddCustomer = null;
     FrmSalutationList frmSalutationList = null;
     FrmIdTypes frmIdTypes = null;
+    FrmOccupationList frmOccupationList = null;
 
     /**
      * Creates new form Main
@@ -56,6 +58,7 @@ public class Main extends javax.swing.JFrame
         data = new javax.swing.JMenu();
         idTypeList = new javax.swing.JMenuItem();
         salutationList = new javax.swing.JMenuItem();
+        occupationList = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -133,6 +136,15 @@ public class Main extends javax.swing.JFrame
             }
         });
         data.add(salutationList);
+
+        occupationList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
+        occupationList.setText("Occupation List");
+        occupationList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                occupationListActionPerformed(evt);
+            }
+        });
+        data.add(occupationList);
 
         manage.add(data);
 
@@ -246,6 +258,29 @@ public class Main extends javax.swing.JFrame
         }
     }//GEN-LAST:event_idTypeListActionPerformed
 
+    private void occupationListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_occupationListActionPerformed
+    {//GEN-HEADEREND:event_occupationListActionPerformed
+        //Verify if the form is already loaded
+        boolean AlreadyLoaded = isLoaded("Manage Occupation List");
+        if (AlreadyLoaded == false)
+        {
+            frmOccupationList = new FrmOccupationList();
+            desktopPane.add(frmOccupationList);
+            //Load the Form
+            frmOccupationList.setVisible(true);
+            frmOccupationList.show();
+            try
+            {
+                frmOccupationList.setIcon(false);
+                frmOccupationList.setSelected(true);
+            }
+            catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Error displaying the form.", e);
+            }
+        }
+    }//GEN-LAST:event_occupationListActionPerformed
+
     /**
      * This function checks if a specified form is already displayed. It accepts
      * the window title in the form of a string and checks if it is already
@@ -354,6 +389,7 @@ public class Main extends javax.swing.JFrame
     private javax.swing.JMenuItem idTypeList;
     private javax.swing.JMenu manage;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem occupationList;
     private javax.swing.JMenuItem salutationList;
     private org.jdesktop.swingx.JXStatusBar statusBar;
     // End of variables declaration//GEN-END:variables
