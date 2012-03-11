@@ -29,7 +29,6 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
 
     private void populateLists()
     {
-
         tblSalutation.setModel(SalutationList.getSalutationTable());
         JYTableHeader header = (JYTableHeader) tblSalutation.getTableHeader();
         CellLayoutHint hint = header.getCellLayoutHint();
@@ -44,8 +43,8 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private void initComponents()
+    {
         jYTableScrollPane1 = new de.javasoft.swing.JYTableScrollPane();
         tblSalutation = new de.javasoft.swing.JYTable();
         cmdAdd = new javax.swing.JButton();
@@ -53,111 +52,116 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
         cmdDisable = new javax.swing.JButton();
         cmdClose = new javax.swing.JButton();
         cmdRefresh = new javax.swing.JButton();
-
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Manage Salutation List");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/database_table.png"))); // NOI18N
-
         tblSalutation.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                                   new Object [][]
+                                   {
 
-            },
-            new String [] {
-                "ID", "Salutation", "Status"
-            }
-        ));
+                                   },
+                                   new String []
+                                   {
+                                       "ID", "Salutation", "Status"
+                                   }
+                               ));
         tblSalutation.setColumnControlVisible(false);
         tblSalutation.setFillsViewportHeight(false);
         jYTableScrollPane1.setViewportView(tblSalutation);
         tblSalutation.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
         cmdAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/add.png"))); // NOI18N
         cmdAdd.setText("Add");
-        cmdAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdAdd.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdAddActionPerformed(evt);
             }
         });
-
         cmdEnable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/accept.png"))); // NOI18N
         cmdEnable.setText("Enable");
-        cmdEnable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdEnable.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdEnableActionPerformed(evt);
             }
         });
-
         cmdDisable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/delete.png"))); // NOI18N
         cmdDisable.setText("Disable");
-        cmdDisable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdDisable.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdDisableActionPerformed(evt);
             }
         });
-
         cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/cross.png"))); // NOI18N
         cmdClose.setText("Close");
-        cmdClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdClose.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdCloseActionPerformed(evt);
             }
         });
-
         cmdRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/arrow_refresh.png"))); // NOI18N
-        cmdRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cmdRefresh.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cmdRefreshActionPerformed(evt);
             }
         });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cmdRefresh)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                        .addComponent(cmdAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdEnable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdDisable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmdClose)))
-                .addContainerGap())
+                      .addContainerGap()
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                          .addComponent(cmdRefresh)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                          .addComponent(cmdAdd)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                          .addComponent(cmdEnable)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                          .addComponent(cmdDisable)
+                                          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                          .addComponent(cmdClose)))
+                      .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdClose)
-                    .addComponent(cmdDisable)
-                    .addComponent(cmdAdd)
-                    .addComponent(cmdEnable)
-                    .addComponent(cmdRefresh))
-                .addContainerGap())
+                      .addContainerGap()
+                      .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addGap(14, 14, 14)
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmdClose)
+                                .addComponent(cmdDisable)
+                                .addComponent(cmdAdd)
+                                .addComponent(cmdEnable)
+                                .addComponent(cmdRefresh))
+                      .addContainerGap())
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCloseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdCloseActionPerformed
-    {//GEN-HEADEREND:event_cmdCloseActionPerformed
+    {
+        //GEN-HEADEREND:event_cmdCloseActionPerformed
         Utilities.showCancelScreen(this);
     }//GEN-LAST:event_cmdCloseActionPerformed
 
     private void cmdDisableActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdDisableActionPerformed
-    {//GEN-HEADEREND:event_cmdDisableActionPerformed
+    {
+        //GEN-HEADEREND:event_cmdDisableActionPerformed
         if (tblSalutation.getSelectedRow() != -1)
         {
             String message = "Are you sure you want to disable the selected item(s)?";
@@ -180,7 +184,8 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
     }//GEN-LAST:event_cmdDisableActionPerformed
 
     private void cmdEnableActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdEnableActionPerformed
-    {//GEN-HEADEREND:event_cmdEnableActionPerformed
+    {
+        //GEN-HEADEREND:event_cmdEnableActionPerformed
         if (tblSalutation.getSelectedRow() != -1)
         {
             String message = "Are you sure you want to enable the selected item(s)?";
@@ -203,15 +208,13 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
     }//GEN-LAST:event_cmdEnableActionPerformed
 
     private void cmdAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdAddActionPerformed
-    {//GEN-HEADEREND:event_cmdAddActionPerformed
-        
+    {
+        //GEN-HEADEREND:event_cmdAddActionPerformed
         String name = JOptionPane.showInputDialog("Salutation");
-        
         if (name == null)
         {
             return;
         }
-        
         if (name.trim().isEmpty())
         {
             name = "Kindly enter a title for the entry.";
@@ -222,40 +225,37 @@ public class FrmSalutationList extends javax.swing.JInternalFrame
         String message = "";
         switch (result)
         {
-            case -1:
-                message = "An error occurred while trying to add a new item to the list.\n"
-                        + "Kindly verify your input and try again.";
-                Utilities.showErrorMessage(rootPane, message);
-                break;
-
-            case 0:
-                message = "The item was successfully added.";
-                Utilities.showInfoMessage(rootPane, message);
-                break;
-
-            case 1:
-                message = "An error occurred while trying to add a new item to the list.\n"
-                        + "Kindly verify your input and try again.";
-                Utilities.showErrorMessage(rootPane, message);
-                break;
-
-            case 2:
-                message = "That item is already in the list.\n"
-                        + "Kindly verify your input and try again.";
-                Utilities.showErrorMessage(rootPane, message);
-                break;
-
-            default:
-                message = "An error occurred while trying to add a new item to the list.\n"
-                        + "Kindly verify your input and try again.";
-                Utilities.showErrorMessage(rootPane, message);
-                break;
+        case -1:
+            message = "An error occurred while trying to add a new item to the list.\n"
+                      + "Kindly verify your input and try again.";
+            Utilities.showErrorMessage(rootPane, message);
+            break;
+        case 0:
+            message = "The item was successfully added.";
+            Utilities.showInfoMessage(rootPane, message);
+            break;
+        case 1:
+            message = "An error occurred while trying to add a new item to the list.\n"
+                      + "Kindly verify your input and try again.";
+            Utilities.showErrorMessage(rootPane, message);
+            break;
+        case 2:
+            message = "That item is already in the list.\n"
+                      + "Kindly verify your input and try again.";
+            Utilities.showErrorMessage(rootPane, message);
+            break;
+        default:
+            message = "An error occurred while trying to add a new item to the list.\n"
+                      + "Kindly verify your input and try again.";
+            Utilities.showErrorMessage(rootPane, message);
+            break;
         }
         populateLists();
     }//GEN-LAST:event_cmdAddActionPerformed
 
     private void cmdRefreshActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdRefreshActionPerformed
-    {//GEN-HEADEREND:event_cmdRefreshActionPerformed
+    {
+        //GEN-HEADEREND:event_cmdRefreshActionPerformed
         populateLists();
     }//GEN-LAST:event_cmdRefreshActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

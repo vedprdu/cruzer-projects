@@ -42,7 +42,7 @@ public class SalutationList
         {
             result = 2;
             String message = "An error occurred while adding a salutation.\n"
-                    + "The entry already esists in the database.";
+                             + "The entry already esists in the database.";
             logger.log(Level.SEVERE, message, e);
         }
         catch (Exception e)
@@ -146,28 +146,23 @@ public class SalutationList
         ArrayList<Integer> ids = new ArrayList<Integer>();
         ArrayList<String> salutations = new ArrayList<String>();
         ArrayList<String> statusses = new ArrayList<String>();
-
         final Class<?>[] columnClasses =
         {
             Integer.class, String.class, String.class
         };
-
         DefaultTableModel model = new DefaultTableModel()
         {
-
             @Override
             public Class<?> getColumnClass(int columnIndex)
             {
                 return columnClasses[columnIndex];
             }
-
             @Override
             public boolean isCellEditable(int rowIndex, int mColIndex)
             {
                 return false;
             }
         };
-
         try
         {
             String sql = "SELECT `salID`, `salutation`, `status` FROM `lstSalutations` ORDER BY `salutation` ASC;";

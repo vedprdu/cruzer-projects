@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package iloan.customer;
 
 import iloan.kernel.ImageFilter;
 import iloan.kernel.Utilities;
 import iloan.utilities.IDTypeList;
+import iloan.utilities.OccupationList;
 import iloan.utilities.SalutationList;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,14 +11,15 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
@@ -34,6 +32,7 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     File selectedFile = null;
     File tempImage = null;
     String validationText = "";
+    int age = 0;
 
     /**
      * Creates new form FrmAddCustomer
@@ -56,6 +55,12 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         ArrayList<String> idTypeList = IDTypeList.getIDTypeList();
         idTypeList.add(0, "--- Select One ---");
         cmbIDType.setModel(new DefaultComboBoxModel(idTypeList.toArray()));
+        //Populate Occupation List
+        ArrayList<String> occupationList = OccupationList.getOccupationList();
+        occupationList.add(0, "--- Select One ---");
+        cmbOccupation.setModel(new DefaultComboBoxModel(occupationList.toArray()));
+        cmbOccupation.setSelectedItem("Unknown");
+
 
 
     }
@@ -64,49 +69,72 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     {
         boolean passed = true;
         validationText = "Kindly correct the following issues before proceeding.\n\n";
-
         if (cmbSalutation.getSelectedItem().toString().equals("--- Select One ---"))
         {
             validationText += "You must select a salutation.\n";
             passed = false;
         }
-
         if (txtFirstName.getText().trim().isEmpty())
         {
             validationText += "You must enter a first name.\n";
             passed = false;
         }
-
         if (txtLastName.getText().trim().isEmpty())
         {
             validationText += "You must enter a last name.\n";
             passed = false;
         }
-
         if (Utilities.YMD_Formatter.format(calDOB.getDate()).equals(Utilities.YMD_Formatter.format(new Date())))
         {
             validationText += "You must enter the customer's date of birth.\n";
             passed = false;
         }
+        //Check the date of birth;
+        Calendar today = new GregorianCalendar();
+        today.setTime(new Date());
+
+        Calendar dateOfBirth = new GregorianCalendar();
+        dateOfBirth.setTime(calDOB.getDate());
+
+        age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+
+        // Add the tentative age to the date of birth to get this year's birthday
+        dateOfBirth.add(Calendar.YEAR, age);
+
+        // If this year's birthday has not happened yet, subtract one from age
+        if (today.before(dateOfBirth))
+        {
+            age--;
+        }
+
+        if (age < 0)
+        {
+            validationText += "A person's date of birth cannot be in the future.\n";
+            passed = false;
+        }
+
 
         if (cmbGender.getSelectedItem().toString().equals("--- Select One ---"))
         {
             validationText += "You must select a gender.\n";
             passed = false;
         }
-
         if (cmbIDType.getSelectedItem().toString().equals("--- Select One ---"))
         {
             validationText += "You must select an ID Type.\n";
             passed = false;
         }
-
         if (txtIDNum.getText().trim().isEmpty())
         {
             validationText += "You must enter an ID Number.\n";
             passed = false;
         }
-
+        
+        if (selectedFile == null)
+        {
+            selectedFile = new File("images/no-image-selected.png");
+        }
+        
         return passed;
     }
 
@@ -591,6 +619,7 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
         customerTabbedPane.addTab("Notes", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/note.png")), notesPanel); // NOI18N
 
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/no-image-selected.png"))); // NOI18N
         jScrollPane3.setViewportView(lblImage);
 
         cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/accept.png"))); // NOI18N
@@ -729,22 +758,26 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     }//GEN-LAST:event_cmdNext2next
 
     private void cmdNext3next(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdNext3next
-    {//GEN-HEADEREND:event_cmdNext3next
+    {
+//GEN-HEADEREND:event_cmdNext3next
         customerTabbedPane.setSelectedIndex(customerTabbedPane.getSelectedIndex() + 1);
     }//GEN-LAST:event_cmdNext3next
 
     private void cmdCancel3cancel(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdCancel3cancel
-    {//GEN-HEADEREND:event_cmdCancel3cancel
+    {
+//GEN-HEADEREND:event_cmdCancel3cancel
         Utilities.showCancelScreen(this);
     }//GEN-LAST:event_cmdCancel3cancel
 
     private void cmdCancel4cancel(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdCancel4cancel
-    {//GEN-HEADEREND:event_cmdCancel4cancel
+    {
+//GEN-HEADEREND:event_cmdCancel4cancel
         Utilities.showCancelScreen(this);
     }//GEN-LAST:event_cmdCancel4cancel
 
     private void cmdBrowseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdBrowseActionPerformed
-    {//GEN-HEADEREND:event_cmdBrowseActionPerformed
+    {
+//GEN-HEADEREND:event_cmdBrowseActionPerformed
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //fc.addChoosableFileFilter(new ImageFilter());
@@ -765,7 +798,6 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
                     int imageWidth = img.getWidth(null);
                     int imageHeight = img.getHeight(null);
                     double aspectRatio = (double) imageWidth / (double) imageHeight;
-
                     if (thumbRatio < aspectRatio)
                     {
                         height = (int) (width / aspectRatio);
@@ -803,18 +835,83 @@ public class FrmAddCustomer extends javax.swing.JInternalFrame
     }//GEN-LAST:event_cmdBrowseActionPerformed
 
     private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdSaveActionPerformed
-    {//GEN-HEADEREND:event_cmdSaveActionPerformed
+    {
+//GEN-HEADEREND:event_cmdSaveActionPerformed
+        //Check if the inputs pass validation
         if (!passedValidation())
         {
             Utilities.showWarningMessage(rootPane, validationText);
             return;
         }
+        //Check if the person's age is correct.
+        if (age < 18)
+        {
+            String message = "This person is only " + age + " years old.\n"
+                    + "Do you still want to continue?";
+            int response = Utilities.showConfirmDialog(rootPane, message);
+            if (response == JOptionPane.NO_OPTION)
+            {
+                return;
+            }
 
-        String salutation = cmbSalutation.getSelectedItem().toString();
+        }
+
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("salutation", cmbSalutation.getSelectedItem().toString().trim());
+        params.put("firstName", WordUtils.capitalizeFully(txtFirstName.getText().trim()));
+        params.put("lastName", WordUtils.capitalizeFully(txtLastName.getText().trim()));
+        params.put("otherName", WordUtils.capitalizeFully(txtOtherName.getText().trim()));
+        params.put("dob", Utilities.YMD_Formatter.format(calDOB.getDate()));
+        params.put("gender", cmbGender.getSelectedItem().toString());
+        params.put("idType", cmbIDType.getSelectedItem().toString());
+        params.put("idNum", txtIDNum.getText().trim());
+        params.put("landline", txtHomePhone.getText().trim());
+        params.put("cellPhone", txtCellPhone.getText().trim());
+        params.put("homeEmail", txtHomeEmail.getText().trim());
+        params.put("homeAddress", txtHomeAddress.getText().trim());
+        params.put("occupation", cmbOccupation.getSelectedItem().toString());
+        params.put("workplace", WordUtils.capitalizeFully(txtWorkplace.getText().trim()));
+        params.put("workTelephone", txtTelephone.getText().trim());
+        params.put("workEmail", txtWorkEmail.getText().trim());
+        params.put("workAddress", txtWorkAddress.getText().trim());
+        params.put("notes", txtNotes.getText().trim());
+
+        if (chkImage.isSelected() && tempImage.exists())
+        {
+            params.put("image", tempImage);
+        }
+        else
+        {
+            params.put("image", selectedFile);
+        }
+
+        boolean successful = Customer.addCustomer(params);
+        if (successful)
+        {
+            String message = "The customer was successfully added.\n"
+                    + "Would you like to add another?";
+            int response = Utilities.showConfirmDialog(rootPane, message);
+            if (response == JOptionPane.YES_OPTION)
+            {
+                cmdResetFormActionPerformed(null);
+            }
+            else
+            {
+                this.dispose();
+            }
+        }
+        else
+        {
+            String message = "An error occurred while trying to save this customer.\n"
+                    + "Kindly verify your information and try again.\n\n"
+                    + "If the problem persists kindly contact your system administrator.";
+            Utilities.showErrorMessage(rootPane, message);
+        }
     }//GEN-LAST:event_cmdSaveActionPerformed
 
     private void cmdResetFormActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdResetFormActionPerformed
-    {//GEN-HEADEREND:event_cmdResetFormActionPerformed
+    {
+//GEN-HEADEREND:event_cmdResetFormActionPerformed
         remove(customerTabbedPane);
         initComponents();
         populateLists();

@@ -45,8 +45,8 @@ public class Main extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private void initComponents()
+    {
         desktopPane = new javax.swing.JDesktopPane();
         statusBar = new org.jdesktop.swingx.JXStatusBar();
         menuBar = new javax.swing.JMenuBar();
@@ -61,10 +61,15 @@ public class Main extends javax.swing.JFrame
         occupationList = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iLoan - Pawn and Loan management System");
-
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+        });
         statusBar.setPreferredSize(new java.awt.Dimension(27, 25));
         //do not add separators automatically
         statusBar.putClientProperty(BasicStatusBarUI.AUTO_ADD_SEPARATOR, Boolean.FALSE);
@@ -83,108 +88,100 @@ public class Main extends javax.swing.JFrame
         statusBar.add(progressBar);
         //add the statusbar to the rootPane - some themes require this for proper appearance
         getRootPane().putClientProperty("Synthetica.statusBar", statusBar);
-
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
-
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/door_out.png"))); // NOI18N
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 exitMenuItemActionPerformed(evt);
             }
         });
         fileMenu.add(exitMenuItem);
-
         menuBar.add(fileMenu);
-
         customerMenu.setMnemonic('C');
         customerMenu.setText("Customer");
-
         addCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
         addCustomer.setMnemonic('A');
         addCustomer.setText("Add Customer");
-        addCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addCustomer.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 addCustomerActionPerformed(evt);
             }
         });
         customerMenu.add(addCustomer);
-
         menuBar.add(customerMenu);
-
         manage.setText("Manage");
-
         data.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/database_table.png"))); // NOI18N
         data.setText("Data");
-
         idTypeList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         idTypeList.setText("ID Type List");
-        idTypeList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        idTypeList.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 idTypeListActionPerformed(evt);
             }
         });
         data.add(idTypeList);
-
         salutationList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         salutationList.setText("Salutation List");
-        salutationList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        salutationList.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 salutationListActionPerformed(evt);
             }
         });
         data.add(salutationList);
-
         occupationList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         occupationList.setText("Occupation List");
-        occupationList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        occupationList.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 occupationListActionPerformed(evt);
             }
         });
         data.add(occupationList);
-
         manage.add(data);
-
         menuBar.add(manage);
-
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
-
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/information.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
-
         menuBar.add(helpMenu);
-
         setJMenuBar(menuBar);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                    .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                                .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                      .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                      .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_exitMenuItemActionPerformed
     {
+        Environment.closeConnection();
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
@@ -213,7 +210,8 @@ public class Main extends javax.swing.JFrame
     }//GEN-LAST:event_addCustomerActionPerformed
 
     private void salutationListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_salutationListActionPerformed
-    {//GEN-HEADEREND:event_salutationListActionPerformed
+    {
+        //GEN-HEADEREND:event_salutationListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage Salutation List");
         if (AlreadyLoaded == false)
@@ -236,7 +234,8 @@ public class Main extends javax.swing.JFrame
     }//GEN-LAST:event_salutationListActionPerformed
 
     private void idTypeListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_idTypeListActionPerformed
-    {//GEN-HEADEREND:event_idTypeListActionPerformed
+    {
+        //GEN-HEADEREND:event_idTypeListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage ID Type List");
         if (AlreadyLoaded == false)
@@ -259,7 +258,8 @@ public class Main extends javax.swing.JFrame
     }//GEN-LAST:event_idTypeListActionPerformed
 
     private void occupationListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_occupationListActionPerformed
-    {//GEN-HEADEREND:event_occupationListActionPerformed
+    {
+        //GEN-HEADEREND:event_occupationListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage Occupation List");
         if (AlreadyLoaded == false)
@@ -280,6 +280,12 @@ public class Main extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_occupationListActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {
+        //GEN-HEADEREND:event_formWindowClosing
+        exitMenuItemActionPerformed(null);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * This function checks if a specified form is already displayed. It accepts
@@ -358,7 +364,6 @@ public class Main extends javax.swing.JFrame
          */
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             @Override
             public void run()
             {
