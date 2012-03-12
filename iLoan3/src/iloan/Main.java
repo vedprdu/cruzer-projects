@@ -1,6 +1,8 @@
 package iloan;
 
 import iloan.customer.FrmAddCustomer;
+import iloan.customer.FrmEditCustomer;
+import iloan.customer.FrmViewCustomer;
 import iloan.kernel.Environment;
 import iloan.kernel.StatusHandlers;
 import iloan.utilities.FrmIdTypes;
@@ -26,6 +28,8 @@ public class Main extends javax.swing.JFrame
     FrmSalutationList frmSalutationList = null;
     FrmIdTypes frmIdTypes = null;
     FrmOccupationList frmOccupationList = null;
+    FrmViewCustomer frmViewCustomer = null;
+    FrmEditCustomer frmEditCustomer = null;
 
     /**
      * Creates new form Main
@@ -45,8 +49,8 @@ public class Main extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
+
         desktopPane = new javax.swing.JDesktopPane();
         statusBar = new org.jdesktop.swingx.JXStatusBar();
         menuBar = new javax.swing.JMenuBar();
@@ -54,6 +58,8 @@ public class Main extends javax.swing.JFrame
         exitMenuItem = new javax.swing.JMenuItem();
         customerMenu = new javax.swing.JMenu();
         addCustomer = new javax.swing.JMenuItem();
+        editCustomer = new javax.swing.JMenuItem();
+        viewCustomer = new javax.swing.JMenuItem();
         manage = new javax.swing.JMenu();
         data = new javax.swing.JMenu();
         idTypeList = new javax.swing.JMenuItem();
@@ -61,15 +67,15 @@ public class Main extends javax.swing.JFrame
         occupationList = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iLoan - Pawn and Loan management System");
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+
         statusBar.setPreferredSize(new java.awt.Dimension(27, 25));
         //do not add separators automatically
         statusBar.putClientProperty(BasicStatusBarUI.AUTO_ADD_SEPARATOR, Boolean.FALSE);
@@ -88,94 +94,121 @@ public class Main extends javax.swing.JFrame
         statusBar.add(progressBar);
         //add the statusbar to the rootPane - some themes require this for proper appearance
         getRootPane().putClientProperty("Synthetica.statusBar", statusBar);
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
+
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/door_out.png"))); // NOI18N
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
             }
         });
         fileMenu.add(exitMenuItem);
+
         menuBar.add(fileMenu);
+
         customerMenu.setMnemonic('C');
         customerMenu.setText("Customer");
+
         addCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
         addCustomer.setMnemonic('A');
         addCustomer.setText("Add Customer");
-        addCustomer.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        addCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCustomerActionPerformed(evt);
             }
         });
         customerMenu.add(addCustomer);
+
+        editCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_edit.png"))); // NOI18N
+        editCustomer.setText("Edit Customer");
+        editCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCustomerActionPerformed(evt);
+            }
+        });
+        customerMenu.add(editCustomer);
+
+        viewCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_go.png"))); // NOI18N
+        viewCustomer.setText("View Customer");
+        viewCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCustomerActionPerformed(evt);
+            }
+        });
+        customerMenu.add(viewCustomer);
+
         menuBar.add(customerMenu);
+
         manage.setText("Manage");
+
         data.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/database_table.png"))); // NOI18N
         data.setText("Data");
+
         idTypeList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         idTypeList.setText("ID Type List");
-        idTypeList.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        idTypeList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idTypeListActionPerformed(evt);
             }
         });
         data.add(idTypeList);
+
         salutationList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         salutationList.setText("Salutation List");
-        salutationList.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        salutationList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salutationListActionPerformed(evt);
             }
         });
         data.add(salutationList);
+
         occupationList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/application_view_list.png"))); // NOI18N
         occupationList.setText("Occupation List");
-        occupationList.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        occupationList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 occupationListActionPerformed(evt);
             }
         });
         data.add(occupationList);
+
         manage.add(data);
+
         menuBar.add(manage);
+
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
+
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/information.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
+
         menuBar.add(helpMenu);
+
         setJMenuBar(menuBar);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                                .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                      .addGap(0, 0, 0))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                      .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                      .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,7 +244,7 @@ public class Main extends javax.swing.JFrame
 
     private void salutationListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_salutationListActionPerformed
     {
-        //GEN-HEADEREND:event_salutationListActionPerformed
+//GEN-HEADEREND:event_salutationListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage Salutation List");
         if (AlreadyLoaded == false)
@@ -235,7 +268,7 @@ public class Main extends javax.swing.JFrame
 
     private void idTypeListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_idTypeListActionPerformed
     {
-        //GEN-HEADEREND:event_idTypeListActionPerformed
+//GEN-HEADEREND:event_idTypeListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage ID Type List");
         if (AlreadyLoaded == false)
@@ -259,7 +292,7 @@ public class Main extends javax.swing.JFrame
 
     private void occupationListActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_occupationListActionPerformed
     {
-        //GEN-HEADEREND:event_occupationListActionPerformed
+//GEN-HEADEREND:event_occupationListActionPerformed
         //Verify if the form is already loaded
         boolean AlreadyLoaded = isLoaded("Manage Occupation List");
         if (AlreadyLoaded == false)
@@ -283,9 +316,56 @@ public class Main extends javax.swing.JFrame
 
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {
-        //GEN-HEADEREND:event_formWindowClosing
+//GEN-HEADEREND:event_formWindowClosing
         exitMenuItemActionPerformed(null);
     }//GEN-LAST:event_formWindowClosing
+
+    private void viewCustomerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_viewCustomerActionPerformed
+    {
+//GEN-HEADEREND:event_viewCustomerActionPerformed
+        //Verify if the form is already loaded
+        boolean AlreadyLoaded = isLoaded("View Customer");
+        if (AlreadyLoaded == false)
+        {
+            frmViewCustomer = new FrmViewCustomer();
+            desktopPane.add(frmViewCustomer);
+            //Load the Form
+            frmViewCustomer.setVisible(true);
+            frmViewCustomer.show();
+            try
+            {
+                frmViewCustomer.setIcon(false);
+                frmViewCustomer.setSelected(true);
+            }
+            catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Error displaying the form.", e);
+            }
+        }
+    }//GEN-LAST:event_viewCustomerActionPerformed
+
+    private void editCustomerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_editCustomerActionPerformed
+    {//GEN-HEADEREND:event_editCustomerActionPerformed
+        //Verify if the form is already loaded
+        boolean AlreadyLoaded = isLoaded("Edit Customer");
+        if (AlreadyLoaded == false)
+        {
+            frmEditCustomer = new FrmEditCustomer();
+            desktopPane.add(frmEditCustomer);
+            //Load the Form
+            frmEditCustomer.setVisible(true);
+            frmEditCustomer.show();
+            try
+            {
+                frmEditCustomer.setIcon(false);
+                frmEditCustomer.setSelected(true);
+            }
+            catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Error displaying the form.", e);
+            }
+        }
+    }//GEN-LAST:event_editCustomerActionPerformed
 
     /**
      * This function checks if a specified form is already displayed. It accepts
@@ -364,6 +444,7 @@ public class Main extends javax.swing.JFrame
          */
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             @Override
             public void run()
             {
@@ -388,6 +469,7 @@ public class Main extends javax.swing.JFrame
     private javax.swing.JMenu customerMenu;
     private javax.swing.JMenu data;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem editCustomer;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
@@ -397,5 +479,6 @@ public class Main extends javax.swing.JFrame
     private javax.swing.JMenuItem occupationList;
     private javax.swing.JMenuItem salutationList;
     private org.jdesktop.swingx.JXStatusBar statusBar;
+    private javax.swing.JMenuItem viewCustomer;
     // End of variables declaration//GEN-END:variables
 }

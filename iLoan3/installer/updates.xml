@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updateDescriptor baseUrl="">
+  <entry targetMediaFileId="26" updatableVersionMin="" updatableVersionMax="" fileName="iLoan_windows_4_0.exe" newVersion="4.0" newMediaFileId="26" fileSize="11377664" bundledJre="" archive="false">
+    <comment language="en" />
+  </entry>
+</updateDescriptor>
+
