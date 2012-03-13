@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Blob;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,91 +47,85 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     private void populateLists()
     {
         tblCustomers.setModel(Customer.getCustomerTable());
-        //Set a default birth date
-        calDOB.setDate(new Date());
-        //Populate salutations
-        ArrayList<String> salutationList = SalutationList.getSalutationList();
-        salutationList.add(0, "--- Select One ---");
-        cmbSalutation.setModel(new DefaultComboBoxModel(salutationList.toArray()));
-        //Populate ID Types
-        ArrayList<String> idTypeList = IDTypeList.getIDTypeList();
-        idTypeList.add(0, "--- Select One ---");
-        cmbIDType.setModel(new DefaultComboBoxModel(idTypeList.toArray()));
-        //Populate Occupation List
-        ArrayList<String> occupationList = OccupationList.getOccupationList();
-        occupationList.add(0, "--- Select One ---");
-        cmbOccupation.setModel(new DefaultComboBoxModel(occupationList.toArray()));
-        cmbOccupation.setSelectedItem("Unknown");
     }
 
-    private boolean passedValidation()
-    {
-        boolean passed = true;
-        validationText = "Kindly correct the following issues before proceeding.\n\n";
-        if (cmbSalutation.getSelectedItem().toString().equals("--- Select One ---"))
-        {
-            validationText += "You must select a salutation.\n";
-            passed = false;
-        }
-        if (txtFirstName.getText().trim().isEmpty())
-        {
-            validationText += "You must enter a first name.\n";
-            passed = false;
-        }
-        if (txtLastName.getText().trim().isEmpty())
-        {
-            validationText += "You must enter a last name.\n";
-            passed = false;
-        }
-        if (Utilities.YMD_Formatter.format(calDOB.getDate()).equals(Utilities.YMD_Formatter.format(new Date())))
-        {
-            validationText += "You must enter the customer's date of birth.\n";
-            passed = false;
-        }
-        //Check the date of birth;
-        Calendar today = new GregorianCalendar();
-        today.setTime(new Date());
-        Calendar dateOfBirth = new GregorianCalendar();
-        dateOfBirth.setTime(calDOB.getDate());
-        age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
-        // Add the tentative age to the date of birth to get this year's birthday
-        dateOfBirth.add(Calendar.YEAR, age);
-        // If this year's birthday has not happened yet, subtract one from age
-        if (today.before(dateOfBirth))
-        {
-            age--;
-        }
-        if (age < 0)
-        {
-            validationText += "A person's date of birth cannot be in the future.\n";
-            passed = false;
-        }
-        if (cmbGender.getSelectedItem().toString().equals("--- Select One ---"))
-        {
-            validationText += "You must select a gender.\n";
-            passed = false;
-        }
-        if (cmbIDType.getSelectedItem().toString().equals("--- Select One ---"))
-        {
-            validationText += "You must select an ID Type.\n";
-            passed = false;
-        }
-        if (txtIDNum.getText().trim().isEmpty())
-        {
-            validationText += "You must enter an ID Number.\n";
-            passed = false;
-        }
-        if (selectedFile == null)
-        {
-            selectedFile = new File("images/no-image-selected.png");
-        }
-        return passed;
-    }
-
+   
     private void loadCustomerInfo()
     {
-        int selected = Integer.valueOf(tblCustomers.getValueAt(tblCustomers.getSelectedRow(), 0).toString());
-        
+        int custID = Integer.valueOf(tblCustomers.getValueAt(tblCustomers.getSelectedRow(), 0).toString());
+        HashMap<String, Object> customer = Customer.getByID(custID);
+
+
+        txtCustID.setText(customer.get("id").toString());
+        txtSalutation.setText(customer.get("salutation").toString());
+        txtFirstName.setText(customer.get("firstName").toString());
+        txtLastName.setText(customer.get("lastName").toString());
+        txtOtherName.setText(customer.get("otherName").toString());
+        txtDOB.setText(Utilities.MDY_Formatter.format((Date) customer.get("dob")));
+        txtGender.setText(customer.get("gender").toString());
+        txtIDType.setText(customer.get("idType").toString());
+        txtIDNum.setText(customer.get("idNum").toString());
+        txtHomePhone.setText(customer.get("landline").toString());
+        txtCellPhone.setText(customer.get("cellPhone").toString());
+        txtHomeEmail.setText(customer.get("homeEmail").toString());
+        txtHomeAddress.setText(customer.get("homeAddress").toString());
+        txtOccupation.setText(customer.get("occupation").toString());
+        txtWorkplace.setText(customer.get("workplace").toString());
+        txtWorkPhone.setText(customer.get("workTelephone").toString());
+        txtWorkEmail.setText(customer.get("workEmail").toString());
+        txtWorkAddress.setText(customer.get("workAddress").toString());
+        txtNotes.setText(customer.get("notes").toString());
+        txtRating.setText(customer.get("rating").toString());
+        txtRegistered.setText(customer.get("created").toString());
+        txtModified.setText(customer.get("modified").toString());
+
+        try
+        {
+            Blob blob = (Blob) customer.get("image");
+            ImageIcon ii = new ImageIcon(blob.getBytes(1, (int) blob.length()));
+            int height = (int) (jScrollPane3.getHeight() * .95);
+            int width = (int) (jScrollPane3.getWidth() * .95);
+            if (ii.getIconHeight() > height || ii.getIconWidth() > width)
+            {
+                Image img = ii.getImage();
+                try
+                {
+                    double thumbRatio = (double) width / (double) height;
+                    int imageWidth = img.getWidth(null);
+                    int imageHeight = img.getHeight(null);
+                    double aspectRatio = (double) imageWidth / (double) imageHeight;
+                    if (thumbRatio < aspectRatio)
+                    {
+                        height = (int) (width / aspectRatio);
+                    }
+                    else
+                    {
+                        width = (int) (height * aspectRatio);
+                    }
+                    // Draw the scaled tempImage
+                    BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                    Graphics2D graphics2D = newImage.createGraphics();
+                    graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    graphics2D.drawImage(img, 0, 0, width, height, null);
+                    ii = new ImageIcon(newImage);
+                    tempImage = new File(System.getProperty("java.io.tmpdir") + "/image.jpg");
+                    ImageIO.write(newImage, "JPG", tempImage);
+                    //selectedFile = tempImage;
+                }
+                catch (IOException ex)
+                {
+                    String message = "An error occurred while trying to save the image.";
+                    logger.log(Level.SEVERE, message, ex);
+                }
+            }
+            lblImage.setIcon(ii);
+        }
+        catch (Exception e)
+        {
+            String message = "An error occurred while tring to load the customer's image.";
+            logger.log(Level.SEVERE, message, e);
+        }
+        customerTabbedPane.setSelectedIndex(customerTabbedPane.getSelectedIndex() + 1);
     }
 
     /**
@@ -154,26 +149,28 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
         lblSalutation = new javax.swing.JLabel();
-        cmbSalutation = new javax.swing.JComboBox();
         lblOtherName = new javax.swing.JLabel();
         txtOtherName = new javax.swing.JTextField();
         lblDOB = new javax.swing.JLabel();
-        calDOB = new com.toedter.calendar.JDateChooser();
         cmdCancel = new javax.swing.JButton();
         cmdNext = new javax.swing.JButton();
-        cmbGender = new javax.swing.JComboBox();
         lblGender = new javax.swing.JLabel();
         lblIDType = new javax.swing.JLabel();
-        cmbIDType = new javax.swing.JComboBox();
         lblIDNum = new javax.swing.JLabel();
         txtIDNum = new javax.swing.JTextField();
         cmdResetForm = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        lblCustID = new javax.swing.JLabel();
+        txtCustID = new javax.swing.JTextField();
+        lblRegistered = new javax.swing.JLabel();
+        txtRegistered = new javax.swing.JTextField();
+        lblModified = new javax.swing.JLabel();
+        txtModified = new javax.swing.JTextField();
+        lblRating = new javax.swing.JLabel();
+        txtSalutation = new javax.swing.JTextField();
+        txtDOB = new javax.swing.JTextField();
+        txtGender = new javax.swing.JTextField();
+        txtIDType = new javax.swing.JTextField();
+        txtRating = new javax.swing.JTextField();
         telephonePanel = new javax.swing.JPanel();
         lblHomePhone = new javax.swing.JLabel();
         txtHomePhone = new javax.swing.JTextField();
@@ -188,11 +185,10 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         cmdCancel1 = new javax.swing.JButton();
         addressPanel = new javax.swing.JPanel();
         lblOccupation = new javax.swing.JLabel();
-        cmbOccupation = new javax.swing.JComboBox();
         lblWorkplace = new javax.swing.JLabel();
         txtWorkplace = new javax.swing.JTextField();
         lblTelephone = new javax.swing.JLabel();
-        txtTelephone = new javax.swing.JTextField();
+        txtWorkPhone = new javax.swing.JTextField();
         lblWorkEmail = new javax.swing.JLabel();
         txtWorkEmail = new javax.swing.JTextField();
         lblWorkAddress = new javax.swing.JLabel();
@@ -200,6 +196,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         txtWorkAddress = new javax.swing.JTextArea();
         cmdCancel2 = new javax.swing.JButton();
         cmdNext2 = new javax.swing.JButton();
+        txtOccupation = new javax.swing.JTextField();
         notesPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtNotes = new javax.swing.JTextArea();
@@ -209,19 +206,15 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         imagePanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lblImage = new javax.swing.JLabel();
-        cmdSave = new javax.swing.JButton();
         cmdCancel4 = new javax.swing.JButton();
         lblPicture = new javax.swing.JLabel();
-        txtPicture = new javax.swing.JTextField();
-        cmdBrowse = new javax.swing.JButton();
-        chkImage = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("View Customer");
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_add.png"))); // NOI18N
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/user_go.png"))); // NOI18N
 
         customerTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         customerTabbedPane.setToolTipText("");
@@ -265,7 +258,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addGroup(searchPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cmdNext5)
@@ -277,7 +270,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel5)
@@ -287,25 +280,24 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
 
         customerTabbedPane.addTab(" Search", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/find.png")), searchPanel); // NOI18N
 
-        lblFirstName.setText("First Name:*");
+        lblFirstName.setText("First Name:");
 
-        lblLastName.setText("Last Name:*");
+        lblLastName.setText("Last Name:");
 
+        txtFirstName.setEditable(false);
         txtFirstName.setToolTipText("<html>The customer's first name.<br>\ne.g. \"John\"\n\n</html>");
 
+        txtLastName.setEditable(false);
         txtLastName.setToolTipText("<html>The customer's last name.<br>\ne.g. \"Smith\"\n\n</html>");
 
-        lblSalutation.setText("Salutation:*");
-
-        cmbSalutation.setToolTipText("The customer's salutation.");
+        lblSalutation.setText("Salutation:");
 
         lblOtherName.setText("Other Name:");
 
+        txtOtherName.setEditable(false);
         txtOtherName.setToolTipText("<html>Any other names the customer may have.<br>\ne.g. <ul>\n<li>Middle Names</li>\n<li>Aliases</li>\n\n</ul>\n\n</html>");
 
-        lblDOB.setText("D.O.B.:*");
-
-        calDOB.setToolTipText("The customer's date of birth in MMM d, yyy format");
+        lblDOB.setText("D.O.B.:");
 
         cmdCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/cross.png"))); // NOI18N
         cmdCancel.setMnemonic('C');
@@ -327,17 +319,13 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             }
         });
 
-        cmbGender.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--- Select One ---", "Male", "Female" }));
-        cmbGender.setToolTipText("Which gender does the customer belong to?");
+        lblGender.setText("Gender:");
 
-        lblGender.setText("Gender:*");
+        lblIDType.setText("ID Type:");
 
-        lblIDType.setText("ID Type:*");
+        lblIDNum.setText("ID Number:");
 
-        cmbIDType.setToolTipText("The type of ID used to identify the customer.");
-
-        lblIDNum.setText("ID Number:*");
-
+        txtIDNum.setEditable(false);
         txtIDNum.setToolTipText("The ID number on the card stated above.");
 
         cmdResetForm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/arrow_refresh.png"))); // NOI18N
@@ -348,11 +336,29 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             }
         });
 
-        jLabel1.setText("Cust. ID:");
+        lblCustID.setText("Cust. ID:");
 
-        jLabel2.setText("Registered:");
+        txtCustID.setEditable(false);
 
-        jLabel3.setText("Modified:");
+        lblRegistered.setText("Registered:");
+
+        txtRegistered.setEditable(false);
+
+        lblModified.setText("Modified:");
+
+        txtModified.setEditable(false);
+
+        lblRating.setText("Rating:");
+
+        txtSalutation.setEditable(false);
+
+        txtDOB.setEditable(false);
+
+        txtGender.setEditable(false);
+
+        txtIDType.setEditable(false);
+
+        txtRating.setEditable(false);
 
         javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
         generalPanel.setLayout(generalPanelLayout);
@@ -363,7 +369,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(generalPanelLayout.createSequentialGroup()
                         .addComponent(cmdResetForm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
                         .addComponent(cmdNext)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmdCancel))
@@ -377,22 +383,24 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                             .addComponent(lblGender)
                             .addComponent(lblIDType)
                             .addComponent(lblIDNum)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(lblCustID)
+                            .addComponent(lblRegistered)
+                            .addComponent(lblModified)
+                            .addComponent(lblRating))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
+                            .addComponent(txtModified)
+                            .addComponent(txtRegistered)
+                            .addComponent(txtCustID)
                             .addComponent(txtIDNum)
-                            .addComponent(cmbIDType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtOtherName)
-                            .addComponent(cmbSalutation, 0, 329, Short.MAX_VALUE)
                             .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(calDOB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbGender, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtSalutation, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDOB, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtGender, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtIDType, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtRating, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         generalPanelLayout.setVerticalGroup(
@@ -400,12 +408,12 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             .addGroup(generalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCustID)
+                    .addComponent(txtCustID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSalutation)
-                    .addComponent(cmbSalutation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSalutation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFirstName)
@@ -419,30 +427,34 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                     .addComponent(lblOtherName)
                     .addComponent(txtOtherName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDOB)
-                    .addComponent(calDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGender))
+                    .addComponent(lblGender)
+                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIDType)
-                    .addComponent(cmbIDType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIDType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIDNum)
                     .addComponent(txtIDNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblRating)
+                    .addComponent(txtRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                    .addComponent(lblRegistered)
+                    .addComponent(txtRegistered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblModified)
+                    .addComponent(txtModified, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel)
                     .addComponent(cmdNext)
@@ -454,19 +466,23 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
 
         lblHomePhone.setText("Landline:");
 
+        txtHomePhone.setEditable(false);
         txtHomePhone.setToolTipText("The customer's house phone.\n");
 
         lblCellPhone.setText("Mobile:");
 
+        txtCellPhone.setEditable(false);
         txtCellPhone.setToolTipText("The customer's cell phone.");
 
         lblHomeEmail.setText("Email:");
 
+        txtHomeEmail.setEditable(false);
         txtHomeEmail.setToolTipText("The customer's personal email address.");
 
         lblAddress.setText("Address:");
 
         txtHomeAddress.setColumns(20);
+        txtHomeAddress.setEditable(false);
         txtHomeAddress.setRows(5);
         txtHomeAddress.setToolTipText("The customer's home address.");
         jScrollPane1.setViewportView(txtHomeAddress);
@@ -506,7 +522,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                             .addComponent(lblAddress))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                             .addComponent(txtHomeEmail)
                             .addComponent(txtCellPhone)
                             .addComponent(txtHomePhone)))
@@ -536,7 +552,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAddress)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel1)
                     .addComponent(cmdNext1))
@@ -547,23 +563,25 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
 
         lblOccupation.setText("Occupation:");
 
-        cmbOccupation.setToolTipText("The customer's occupation.\n(What he/she does for a living.)");
-
         lblWorkplace.setText("Workplace:");
 
+        txtWorkplace.setEditable(false);
         txtWorkplace.setToolTipText("The customer's workplace.");
 
         lblTelephone.setText("Telephone:");
 
-        txtTelephone.setToolTipText("The customer's work telephone number.");
+        txtWorkPhone.setEditable(false);
+        txtWorkPhone.setToolTipText("The customer's work telephone number.");
 
         lblWorkEmail.setText("Email:");
 
+        txtWorkEmail.setEditable(false);
         txtWorkEmail.setToolTipText("The customer's work email address.");
 
         lblWorkAddress.setText("Address:");
 
         txtWorkAddress.setColumns(20);
+        txtWorkAddress.setEditable(false);
         txtWorkAddress.setRows(5);
         txtWorkAddress.setToolTipText("The address of the customer's workplace.");
         jScrollPane2.setViewportView(txtWorkAddress);
@@ -588,6 +606,8 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             }
         });
 
+        txtOccupation.setEditable(false);
+
         javax.swing.GroupLayout addressPanelLayout = new javax.swing.GroupLayout(addressPanel);
         addressPanel.setLayout(addressPanelLayout);
         addressPanelLayout.setHorizontalGroup(
@@ -604,11 +624,11 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                             .addComponent(lblWorkAddress))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                             .addComponent(txtWorkEmail)
-                            .addComponent(txtTelephone)
+                            .addComponent(txtWorkPhone)
                             .addComponent(txtWorkplace)
-                            .addComponent(cmbOccupation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtOccupation, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addressPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cmdNext2)
@@ -622,7 +642,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addContainerGap()
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOccupation)
-                    .addComponent(cmbOccupation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOccupation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblWorkplace)
@@ -630,7 +650,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelephone)
-                    .addComponent(txtTelephone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtWorkPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblWorkEmail)
@@ -639,7 +659,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblWorkAddress)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel2)
                     .addComponent(cmdNext2))
@@ -649,6 +669,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         customerTabbedPane.addTab("Occupation", new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/building.png")), addressPanel); // NOI18N
 
         txtNotes.setColumns(20);
+        txtNotes.setEditable(false);
         txtNotes.setRows(5);
         txtNotes.setToolTipText("Any notes you may want to keep on the customer.");
         jScrollPane4.setViewportView(txtNotes);
@@ -682,7 +703,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             .addGroup(notesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notesPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cmdNext3)
@@ -699,7 +720,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
                 .addContainerGap()
                 .addComponent(lblNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel3)
@@ -713,16 +734,6 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/no-image-selected.png"))); // NOI18N
         jScrollPane3.setViewportView(lblImage);
 
-        cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/accept.png"))); // NOI18N
-        cmdSave.setMnemonic('N');
-        cmdSave.setText("Save");
-        cmdSave.setToolTipText("Saves the information you just entered.");
-        cmdSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSaveActionPerformed(evt);
-            }
-        });
-
         cmdCancel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/cross.png"))); // NOI18N
         cmdCancel4.setMnemonic('C');
         cmdCancel4.setText("Cancel");
@@ -732,23 +743,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             }
         });
 
-        lblPicture.setText("ID Picture:");
-
-        txtPicture.setEditable(false);
-        txtPicture.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtPicture.setToolTipText("This is the location of the image that will be used.");
-
-        cmdBrowse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/picture_link.png"))); // NOI18N
-        cmdBrowse.setText("Browse");
-        cmdBrowse.setToolTipText("Click to select the customer's picture.");
-        cmdBrowse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdBrowseActionPerformed(evt);
-            }
-        });
-
-        chkImage.setText("Use scaled down image?");
-        chkImage.setToolTipText("Use the scaled down image shown instead of the orginal?\nThis can reduce the size of your database at the cost of a lower resolution image.");
+        lblPicture.setText("Picture:");
 
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
         imagePanel.setLayout(imagePanelLayout);
@@ -757,36 +752,24 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             .addGroup(imagePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, imagePanelLayout.createSequentialGroup()
-                        .addComponent(chkImage)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-                        .addComponent(cmdSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cmdCancel4))
                     .addGroup(imagePanelLayout.createSequentialGroup()
                         .addComponent(lblPicture)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPicture)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdBrowse)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(imagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPicture)
-                    .addComponent(txtPicture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmdBrowse))
+                .addComponent(lblPicture)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdCancel4)
-                    .addComponent(cmdSave)
-                    .addComponent(chkImage))
+                .addComponent(cmdCancel4)
                 .addContainerGap())
         );
 
@@ -805,7 +788,7 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(customerTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                .addComponent(customerTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -866,136 +849,6 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
         Utilities.showCancelScreen(this);
     }//GEN-LAST:event_cmdCancel4cancel
 
-    private void cmdBrowseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdBrowseActionPerformed
-    {
-//GEN-HEADEREND:event_cmdBrowseActionPerformed
-        JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        //fc.addChoosableFileFilter(new ImageFilter());
-        fc.setFileFilter(new ImageFilter());
-        int returnVal = fc.showOpenDialog(rootPane);
-        if (returnVal == JFileChooser.APPROVE_OPTION)
-        {
-            selectedFile = fc.getSelectedFile();
-            ImageIcon ii = new ImageIcon(selectedFile.getAbsolutePath());
-            int height = (int) (jScrollPane3.getHeight() * .95);
-            int width = (int) (jScrollPane3.getWidth() * .95);
-            if (ii.getIconHeight() > height || ii.getIconWidth() > width)
-            {
-                Image img = ii.getImage();
-                try
-                {
-                    double thumbRatio = (double) width / (double) height;
-                    int imageWidth = img.getWidth(null);
-                    int imageHeight = img.getHeight(null);
-                    double aspectRatio = (double) imageWidth / (double) imageHeight;
-                    if (thumbRatio < aspectRatio)
-                    {
-                        height = (int) (width / aspectRatio);
-                    }
-                    else
-                    {
-                        width = (int) (height * aspectRatio);
-                    }
-                    // Draw the scaled tempImage
-                    BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                    Graphics2D graphics2D = newImage.createGraphics();
-                    graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                    graphics2D.drawImage(img, 0, 0, width, height, null);
-                    ii = new ImageIcon(newImage);
-                    tempImage = new File(System.getProperty("java.io.tmpdir") + "/image.jpg");
-                    ImageIO.write(newImage, "JPG", tempImage);
-                    //selectedFile = tempImage;
-                }
-                catch (IOException ex)
-                {
-                    String message = "An error occurred while trying to save the image.";
-                    logger.log(Level.SEVERE, message, ex);
-                }
-            }
-            lblImage.setIcon(ii);
-            try
-            {
-                txtPicture.setText(selectedFile.getCanonicalPath().toString());
-            }
-            catch (IOException ex)
-            {
-                logger.log(Level.SEVERE, "Error while selecting the file. ", ex);
-            }
-        }
-    }//GEN-LAST:event_cmdBrowseActionPerformed
-
-    private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdSaveActionPerformed
-    {
-//GEN-HEADEREND:event_cmdSaveActionPerformed
-        //Check if the inputs pass validation
-        if (!passedValidation())
-        {
-            Utilities.showWarningMessage(rootPane, validationText);
-            return;
-        }
-        //Check if the person's age is correct.
-        if (age < 18)
-        {
-            String message = "This person is only " + age + " years old.\n"
-                             + "Do you still want to continue?";
-            int response = Utilities.showConfirmDialog(rootPane, message);
-            if (response == JOptionPane.NO_OPTION)
-            {
-                return;
-            }
-        }
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("salutation", cmbSalutation.getSelectedItem().toString().trim());
-        params.put("firstName", WordUtils.capitalizeFully(txtFirstName.getText().trim()));
-        params.put("lastName", WordUtils.capitalizeFully(txtLastName.getText().trim()));
-        params.put("otherName", WordUtils.capitalizeFully(txtOtherName.getText().trim()));
-        params.put("dob", Utilities.YMD_Formatter.format(calDOB.getDate()));
-        params.put("gender", cmbGender.getSelectedItem().toString());
-        params.put("idType", cmbIDType.getSelectedItem().toString());
-        params.put("idNum", txtIDNum.getText().trim());
-        params.put("landline", txtHomePhone.getText().trim());
-        params.put("cellPhone", txtCellPhone.getText().trim());
-        params.put("homeEmail", txtHomeEmail.getText().trim());
-        params.put("homeAddress", txtHomeAddress.getText().trim());
-        params.put("occupation", cmbOccupation.getSelectedItem().toString());
-        params.put("workplace", WordUtils.capitalizeFully(txtWorkplace.getText().trim()));
-        params.put("workTelephone", txtTelephone.getText().trim());
-        params.put("workEmail", txtWorkEmail.getText().trim());
-        params.put("workAddress", txtWorkAddress.getText().trim());
-        params.put("notes", txtNotes.getText().trim());
-        if (chkImage.isSelected() && tempImage.exists())
-        {
-            params.put("image", tempImage);
-        }
-        else
-        {
-            params.put("image", selectedFile);
-        }
-        boolean successful = Customer.addCustomer(params);
-        if (successful)
-        {
-            String message = "The customer was successfully added.\n"
-                             + "Would you like to add another?";
-            int response = Utilities.showConfirmDialog(rootPane, message);
-            if (response == JOptionPane.YES_OPTION)
-            {
-                cmdResetFormActionPerformed(null);
-            }
-            else
-            {
-                this.dispose();
-            }
-        }
-        else
-        {
-            String message = "An error occurred while trying to save this customer.\n"
-                             + "Kindly verify your information and try again.\n\n"
-                             + "If the problem persists kindly contact your system administrator.";
-            Utilities.showErrorMessage(rootPane, message);
-        }
-    }//GEN-LAST:event_cmdSaveActionPerformed
-
     private void cmdResetFormActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdResetFormActionPerformed
     {
 //GEN-HEADEREND:event_cmdResetFormActionPerformed
@@ -1013,10 +866,10 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     private void tblCustomersMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblCustomersMouseClicked
     {
 //GEN-HEADEREND:event_tblCustomersMouseClicked
-      if (evt.getClickCount()>= 2 && tblCustomers.getSelectedRow() != -1)
-      {
-          loadCustomerInfo();
-      }
+        if (evt.getClickCount() >= 2 && tblCustomers.getSelectedRow() != -1)
+        {
+            loadCustomerInfo();
+        }
     }//GEN-LAST:event_tblCustomersMouseClicked
 
     private void cmdNext5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cmdNext5ActionPerformed
@@ -1032,15 +885,9 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
             loadCustomerInfo();
         }
     }//GEN-LAST:event_cmdNext5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addressPanel;
-    private com.toedter.calendar.JDateChooser calDOB;
-    private javax.swing.JCheckBox chkImage;
-    private javax.swing.JComboBox cmbGender;
-    private javax.swing.JComboBox cmbIDType;
-    private javax.swing.JComboBox cmbOccupation;
-    private javax.swing.JComboBox cmbSalutation;
-    private javax.swing.JButton cmdBrowse;
     private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdCancel1;
     private javax.swing.JButton cmdCancel2;
@@ -1053,23 +900,17 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     private javax.swing.JButton cmdNext3;
     private javax.swing.JButton cmdNext5;
     private javax.swing.JButton cmdResetForm;
-    private javax.swing.JButton cmdSave;
     private javax.swing.JTabbedPane customerTabbedPane;
     private javax.swing.JPanel generalPanel;
     private javax.swing.JPanel imagePanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private de.javasoft.swing.JYTableScrollPane jYTableScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblCellPhone;
+    private javax.swing.JLabel lblCustID;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblFirstName;
     private javax.swing.JLabel lblGender;
@@ -1079,10 +920,13 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     private javax.swing.JLabel lblIDType;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblLastName;
+    private javax.swing.JLabel lblModified;
     private javax.swing.JLabel lblNotes;
     private javax.swing.JLabel lblOccupation;
     private javax.swing.JLabel lblOtherName;
     private javax.swing.JLabel lblPicture;
+    private javax.swing.JLabel lblRating;
+    private javax.swing.JLabel lblRegistered;
     private javax.swing.JLabel lblSalutation;
     private javax.swing.JLabel lblTelephone;
     private javax.swing.JLabel lblWorkAddress;
@@ -1093,18 +937,26 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     private de.javasoft.swing.JYTable tblCustomers;
     private javax.swing.JPanel telephonePanel;
     private javax.swing.JTextField txtCellPhone;
+    private javax.swing.JTextField txtCustID;
+    private javax.swing.JTextField txtDOB;
     private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtGender;
     private javax.swing.JTextArea txtHomeAddress;
     private javax.swing.JTextField txtHomeEmail;
     private javax.swing.JTextField txtHomePhone;
     private javax.swing.JTextField txtIDNum;
+    private javax.swing.JTextField txtIDType;
     private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtModified;
     private javax.swing.JTextArea txtNotes;
+    private javax.swing.JTextField txtOccupation;
     private javax.swing.JTextField txtOtherName;
-    private javax.swing.JTextField txtPicture;
-    private javax.swing.JTextField txtTelephone;
+    private javax.swing.JTextField txtRating;
+    private javax.swing.JTextField txtRegistered;
+    private javax.swing.JTextField txtSalutation;
     private javax.swing.JTextArea txtWorkAddress;
     private javax.swing.JTextField txtWorkEmail;
+    private javax.swing.JTextField txtWorkPhone;
     private javax.swing.JTextField txtWorkplace;
     // End of variables declaration//GEN-END:variables
 }

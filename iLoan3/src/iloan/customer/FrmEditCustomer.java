@@ -121,7 +121,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
             validationText += "You must enter an ID Number.\n";
             passed = false;
         }
-        if (selectedFile == null)
+        if (selectedFile == null && tempImage == null)
         {
             selectedFile = new File("images/no-image-selected.png");
         }
@@ -135,8 +135,6 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
 
 
         txtCustID.setText(customer.get("id").toString());
-        txtRegistered.setText(customer.get("created").toString());
-        txtModified.setText(customer.get("modified").toString());
         cmbSalutation.setSelectedItem(customer.get("salutation").toString());
         txtFirstName.setText(customer.get("firstName").toString());
         txtLastName.setText(customer.get("lastName").toString());
@@ -155,6 +153,9 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
         txtWorkEmail.setText(customer.get("workEmail").toString());
         txtWorkAddress.setText(customer.get("workAddress").toString());
         txtNotes.setText(customer.get("notes").toString());
+        cmbRating.setSelectedItem(customer.get("rating").toString());
+        txtRegistered.setText(customer.get("created").toString());
+        txtModified.setText(customer.get("modified").toString());
 
         try
         {
@@ -199,11 +200,10 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
         }
         catch (Exception e)
         {
+            String message = "An error occurred while tring to load the customer's image.";
+            logger.log(Level.SEVERE, message, e);
         }
-
-
         customerTabbedPane.setSelectedIndex(customerTabbedPane.getSelectedIndex() + 1);
-
     }
 
     /**
@@ -247,6 +247,8 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
         txtRegistered = new javax.swing.JTextField();
         lblModified = new javax.swing.JLabel();
         txtModified = new javax.swing.JTextField();
+        lblRating = new javax.swing.JLabel();
+        cmbRating = new javax.swing.JComboBox();
         telephonePanel = new javax.swing.JPanel();
         lblHomePhone = new javax.swing.JLabel();
         txtHomePhone = new javax.swing.JTextField();
@@ -350,7 +352,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jYTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel5)
@@ -423,9 +425,19 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
 
         lblCustID.setText("Cust. ID:");
 
+        txtCustID.setEditable(false);
+
         lblRegistered.setText("Registered:");
 
+        txtRegistered.setEditable(false);
+
         lblModified.setText("Modified:");
+
+        txtModified.setEditable(false);
+
+        lblRating.setText("Rating:");
+
+        cmbRating.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Excellent", "Great", "Good", "Poor", "Black Listed" }));
 
         javax.swing.GroupLayout generalPanelLayout = new javax.swing.GroupLayout(generalPanel);
         generalPanel.setLayout(generalPanelLayout);
@@ -452,7 +464,8 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                             .addComponent(lblIDNum)
                             .addComponent(lblCustID)
                             .addComponent(lblRegistered)
-                            .addComponent(lblModified))
+                            .addComponent(lblModified)
+                            .addComponent(lblRating))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtModified)
@@ -465,7 +478,8 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                             .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(calDOB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbGender, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbGender, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbRating, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         generalPanelLayout.setVerticalGroup(
@@ -509,13 +523,17 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                     .addComponent(txtIDNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRating)
+                    .addComponent(cmbRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegistered)
                     .addComponent(txtRegistered, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblModified)
                     .addComponent(txtModified, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(generalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel)
                     .addComponent(cmdNext)
@@ -609,7 +627,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                 .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAddress)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addGroup(telephonePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel1)
                     .addComponent(cmdNext1))
@@ -712,7 +730,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblWorkAddress)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                 .addGroup(addressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel2)
                     .addComponent(cmdNext2))
@@ -772,7 +790,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                 .addContainerGap()
                 .addComponent(lblNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel3)
@@ -854,7 +872,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                     .addComponent(txtPicture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmdBrowse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdCancel4)
@@ -871,14 +889,14 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(customerTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addComponent(customerTabbedPane)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(customerTabbedPane)
+                .addComponent(customerTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1018,38 +1036,40 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
                 return;
             }
         }
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("salutation", cmbSalutation.getSelectedItem().toString().trim());
-        params.put("firstName", WordUtils.capitalizeFully(txtFirstName.getText().trim()));
-        params.put("lastName", WordUtils.capitalizeFully(txtLastName.getText().trim()));
-        params.put("otherName", WordUtils.capitalizeFully(txtOtherName.getText().trim()));
-        params.put("dob", Utilities.YMD_Formatter.format(calDOB.getDate()));
-        params.put("gender", cmbGender.getSelectedItem().toString());
-        params.put("idType", cmbIDType.getSelectedItem().toString());
-        params.put("idNum", txtIDNum.getText().trim());
-        params.put("landline", txtHomePhone.getText().trim());
-        params.put("cellPhone", txtCellPhone.getText().trim());
-        params.put("homeEmail", txtHomeEmail.getText().trim());
-        params.put("homeAddress", txtHomeAddress.getText().trim());
-        params.put("occupation", cmbOccupation.getSelectedItem().toString());
-        params.put("workplace", WordUtils.capitalizeFully(txtWorkplace.getText().trim()));
-        params.put("workTelephone", txtWorkPhone.getText().trim());
-        params.put("workEmail", txtWorkEmail.getText().trim());
-        params.put("workAddress", txtWorkAddress.getText().trim());
-        params.put("notes", txtNotes.getText().trim());
-        if (chkImage.isSelected() && tempImage.exists())
+        HashMap<String, Object> customer = new HashMap<String, Object>();
+        customer.put("id", txtCustID.getText().trim());
+        customer.put("salutation", cmbSalutation.getSelectedItem().toString().trim());
+        customer.put("firstName", WordUtils.capitalizeFully(txtFirstName.getText().trim()));
+        customer.put("lastName", WordUtils.capitalizeFully(txtLastName.getText().trim()));
+        customer.put("otherName", WordUtils.capitalizeFully(txtOtherName.getText().trim()));
+        customer.put("dob", Utilities.YMD_Formatter.format(calDOB.getDate()));
+        customer.put("gender", cmbGender.getSelectedItem().toString());
+        customer.put("idType", cmbIDType.getSelectedItem().toString());
+        customer.put("idNum", txtIDNum.getText().trim());
+        customer.put("landline", txtHomePhone.getText().trim());
+        customer.put("cellPhone", txtCellPhone.getText().trim());
+        customer.put("homeEmail", txtHomeEmail.getText().trim());
+        customer.put("homeAddress", txtHomeAddress.getText().trim());
+        customer.put("occupation", cmbOccupation.getSelectedItem().toString());
+        customer.put("workplace", WordUtils.capitalizeFully(txtWorkplace.getText().trim()));
+        customer.put("workTelephone", txtWorkPhone.getText().trim());
+        customer.put("workEmail", txtWorkEmail.getText().trim());
+        customer.put("workAddress", txtWorkAddress.getText().trim());
+        customer.put("notes", txtNotes.getText().trim());
+        customer.put("rating", cmbRating.getSelectedItem().toString());
+        if ((chkImage.isSelected() && tempImage.exists()) || selectedFile == null )
         {
-            params.put("image", tempImage);
+            customer.put("image", tempImage);
         }
         else
         {
-            params.put("image", selectedFile);
+            customer.put("image", selectedFile);
         }
-        boolean successful = Customer.addCustomer(params);
+        boolean successful = Customer.editCustomer(customer);
         if (successful)
         {
-            String message = "The customer was successfully added.\n"
-                    + "Would you like to add another?";
+            String message = "The customer's information was successfully updated.\n"
+                    + "Would you like to edit another?";
             int response = Utilities.showConfirmDialog(rootPane, message);
             if (response == JOptionPane.YES_OPTION)
             {
@@ -1062,7 +1082,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
         }
         else
         {
-            String message = "An error occurred while trying to save this customer.\n"
+            String message = "An error occurred while trying to update this customer's information.\n"
                     + "Kindly verify your information and try again.\n\n"
                     + "If the problem persists kindly contact your system administrator.";
             Utilities.showErrorMessage(rootPane, message);
@@ -1112,6 +1132,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
     private javax.swing.JComboBox cmbGender;
     private javax.swing.JComboBox cmbIDType;
     private javax.swing.JComboBox cmbOccupation;
+    private javax.swing.JComboBox cmbRating;
     private javax.swing.JComboBox cmbSalutation;
     private javax.swing.JButton cmdBrowse;
     private javax.swing.JButton cmdCancel;
@@ -1152,6 +1173,7 @@ public class FrmEditCustomer extends javax.swing.JInternalFrame
     private javax.swing.JLabel lblOccupation;
     private javax.swing.JLabel lblOtherName;
     private javax.swing.JLabel lblPicture;
+    private javax.swing.JLabel lblRating;
     private javax.swing.JLabel lblRegistered;
     private javax.swing.JLabel lblSalutation;
     private javax.swing.JLabel lblTelephone;

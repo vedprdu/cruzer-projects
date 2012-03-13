@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
@@ -24,16 +23,18 @@ public class Customer
     static final Logger logger = Logger.getLogger(Customer.class.getName());
 
     /**
+     * This method will add a customer to the system.
      *
-     * @param params - a Hash map containing the values to add.
-     * @return
+     * @param customer - a Hash map containing the values to add.
+     * @return True if the process completed successfully.
+     * @return False if the process failed.
      */
-    public static boolean addCustomer(HashMap<String, Object> params)
+    public static boolean addCustomer(HashMap<String, Object> customer)
     {
         boolean successful = false;
         try
         {
-            File custPhoto = (File) params.get("image");
+            File custPhoto = (File) customer.get("image");
             FileInputStream fis = new FileInputStream(custPhoto);
             String sql = " INSERT INTO `customer` "
                     + " (`custIDType`, `custIDNum`, `custSalutation`, `custFirstName`, "
@@ -45,25 +46,25 @@ public class Customer
                     + " VALUES "
                     + "(?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement prep = Environment.getConnection().prepareStatement(sql);
-            prep.setString(1, (String) params.get("idType"));
-            prep.setString(2, (String) params.get("idNum"));
-            prep.setString(3, (String) params.get("salutation"));
-            prep.setString(4, (String) params.get("firstName"));
-            prep.setString(5, (String) params.get("lastName"));
-            prep.setString(6, (String) params.get("otherName"));
-            prep.setString(7, (String) params.get("dob"));
-            prep.setString(8, (String) params.get("gender"));
-            prep.setString(9, (String) params.get("homeAddress"));
-            prep.setString(10, (String) params.get("landline"));
-            prep.setString(11, (String) params.get("cellPhone"));
-            prep.setString(12, (String) params.get("homeEmail"));
-            prep.setString(13, (String) params.get("occupation"));
-            prep.setString(14, (String) params.get("workplace"));
-            prep.setString(15, (String) params.get("workTelephone"));
-            prep.setString(16, (String) params.get("workEmail"));
-            prep.setString(17, (String) params.get("workAddress"));
+            prep.setString(1, (String) customer.get("idType"));
+            prep.setString(2, (String) customer.get("idNum"));
+            prep.setString(3, (String) customer.get("salutation"));
+            prep.setString(4, (String) customer.get("firstName"));
+            prep.setString(5, (String) customer.get("lastName"));
+            prep.setString(6, (String) customer.get("otherName"));
+            prep.setString(7, (String) customer.get("dob"));
+            prep.setString(8, (String) customer.get("gender"));
+            prep.setString(9, (String) customer.get("homeAddress"));
+            prep.setString(10, (String) customer.get("landline"));
+            prep.setString(11, (String) customer.get("cellPhone"));
+            prep.setString(12, (String) customer.get("homeEmail"));
+            prep.setString(13, (String) customer.get("occupation"));
+            prep.setString(14, (String) customer.get("workplace"));
+            prep.setString(15, (String) customer.get("workTelephone"));
+            prep.setString(16, (String) customer.get("workEmail"));
+            prep.setString(17, (String) customer.get("workAddress"));
             prep.setBlob(18, fis, custPhoto.length());
-            prep.setString(19, (String) params.get("notes"));
+            prep.setString(19, (String) customer.get("notes"));
             prep.setString(20, "Good");//Set Default customer Rating.
             prep.setTimestamp(21, new java.sql.Timestamp(new Date().getTime()));//
             prep.setTimestamp(22, new java.sql.Timestamp(new Date().getTime()));
@@ -73,12 +74,75 @@ public class Customer
         }
         catch (Exception e)
         {
-            String message = "An error occurred while adding the user to the system.";
+            String message = "An error occurred while adding the customer to the system.";
             logger.log(Level.SEVERE, message, e);
         }
         return successful;
     }
 
+    /**
+     * This method will update a customer's information using the given
+     * parameters.
+     *
+     * @param customer
+     * @return
+     */
+    public static boolean editCustomer(HashMap<String, Object> customer)
+    {
+        boolean successful = false;
+        try
+        {
+            File custPhoto = (File) customer.get("image");
+            FileInputStream fis = new FileInputStream(custPhoto);
+            String sql = " UPDATE `customer` SET "
+                    + " `custIDType` = ? , `custIDNum` = ? , `custSalutation` = ? , `custFirstName` = ? , "
+                    + " `custLastName` = ? , `custOtherName` = ? , `custDOB` = ? , `custGender` = ? , "
+                    + " `custAddress` = ? , `custPhone1` = ? , `custPhone2` = ? , `custEmail1` = ? , "
+                    + " `custOccupation` = ? , `custWorkplace` = ? , `custWorkPhone` = ? , `custWorkEmail` = ? , "
+                    + " `custWorkAddress` = ? , `custPicture` = ? , `custNotes` = ? , `custRating` = ? , "
+                    + " `custModified` = ?  "
+                    + " WHERE `custID` =  ? ;";
+            PreparedStatement prep = Environment.getConnection().prepareStatement(sql);
+            prep.setString(1, (String) customer.get("idType"));
+            prep.setString(2, (String) customer.get("idNum"));
+            prep.setString(3, (String) customer.get("salutation"));
+            prep.setString(4, (String) customer.get("firstName"));
+            prep.setString(5, (String) customer.get("lastName"));
+            prep.setString(6, (String) customer.get("otherName"));
+            prep.setString(7, (String) customer.get("dob"));
+            prep.setString(8, (String) customer.get("gender"));
+            prep.setString(9, (String) customer.get("homeAddress"));
+            prep.setString(10, (String) customer.get("landline"));
+            prep.setString(11, (String) customer.get("cellPhone"));
+            prep.setString(12, (String) customer.get("homeEmail"));
+            prep.setString(13, (String) customer.get("occupation"));
+            prep.setString(14, (String) customer.get("workplace"));
+            prep.setString(15, (String) customer.get("workTelephone"));
+            prep.setString(16, (String) customer.get("workEmail"));
+            prep.setString(17, (String) customer.get("workAddress"));
+            prep.setBlob(18, fis, custPhoto.length());
+            prep.setString(19, (String) customer.get("notes"));
+            prep.setString(20, (String) customer.get("rating"));
+            prep.setTimestamp(21, new java.sql.Timestamp(new Date().getTime()));
+            prep.setString(22, (String) customer.get("id"));
+            prep.executeUpdate();
+            prep.close();
+            successful = true;
+        }
+        catch (Exception e)
+        {
+            String message = "An error occurred while updating the customer's info.";
+            logger.log(Level.SEVERE, message, e);
+        }
+        return successful;
+    }
+
+    /**
+     * This method returns a table model containing the list of customers in the
+     * system
+     *
+     * @return
+     */
     public static DefaultTableModel getCustomerTable()
     {
         ArrayList<Integer> ids = new ArrayList<Integer>();
@@ -137,6 +201,12 @@ public class Customer
         return model;
     }
 
+    /**
+     * This methods retrieves the customer with the specified ID.
+     *
+     * @param id - the customer's system ID NOT the ID number.
+     * @return A hash map containing the properties of the customer.
+     */
     public static HashMap<String, Object> getByID(int id)
     {
         HashMap<String, Object> customer = new HashMap<String, Object>();
@@ -174,7 +244,7 @@ public class Customer
                 customer.put("workAddress", rs.getString("custWorkAddress"));
                 customer.put("notes", rs.getString("custNotes"));
                 customer.put("image", rs.getBlob("custPicture"));
-                customer.put("ranking", rs.getString("custRating"));
+                customer.put("rating", rs.getString("custRating"));
                 customer.put("created", Utilities.MDY_Formatter.format(rs.getDate("custCreated")));
                 customer.put("modified", Utilities.MDY_Formatter.format(rs.getDate("custModified")));
             }
