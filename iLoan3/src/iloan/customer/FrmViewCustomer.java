@@ -1,10 +1,6 @@
 package iloan.customer;
 
-import iloan.kernel.ImageFilter;
 import iloan.kernel.Utilities;
-import iloan.utilities.IDTypeList;
-import iloan.utilities.OccupationList;
-import iloan.utilities.SalutationList;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -12,15 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Blob;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
@@ -54,7 +47,6 @@ public class FrmViewCustomer extends javax.swing.JInternalFrame
     {
         int custID = Integer.valueOf(tblCustomers.getValueAt(tblCustomers.getSelectedRow(), 0).toString());
         HashMap<String, Object> customer = Customer.getByID(custID);
-
 
         txtCustID.setText(customer.get("id").toString());
         txtSalutation.setText(customer.get("salutation").toString());

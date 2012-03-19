@@ -5,6 +5,7 @@ import iloan.customer.FrmEditCustomer;
 import iloan.customer.FrmViewCustomer;
 import iloan.kernel.Environment;
 import iloan.kernel.StatusHandlers;
+import iloan.pawn.FrmNewPawn;
 import iloan.utilities.FrmIdTypes;
 import iloan.utilities.FrmOccupationList;
 import iloan.utilities.FrmSalutationList;
@@ -30,6 +31,7 @@ public class Main extends javax.swing.JFrame
     FrmOccupationList frmOccupationList = null;
     FrmViewCustomer frmViewCustomer = null;
     FrmEditCustomer frmEditCustomer = null;
+    FrmNewPawn frmNewPawn = null;
 
     /**
      * Creates new form Main
@@ -60,6 +62,8 @@ public class Main extends javax.swing.JFrame
         addCustomer = new javax.swing.JMenuItem();
         editCustomer = new javax.swing.JMenuItem();
         viewCustomer = new javax.swing.JMenuItem();
+        pawnMenu = new javax.swing.JMenu();
+        newPawn = new javax.swing.JMenuItem();
         manage = new javax.swing.JMenu();
         data = new javax.swing.JMenu();
         idTypeList = new javax.swing.JMenuItem();
@@ -142,6 +146,19 @@ public class Main extends javax.swing.JFrame
         customerMenu.add(viewCustomer);
 
         menuBar.add(customerMenu);
+
+        pawnMenu.setText("Pawns");
+
+        newPawn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iloan/resources/ruby_add.png"))); // NOI18N
+        newPawn.setText("New Pawn");
+        newPawn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newPawnActionPerformed(evt);
+            }
+        });
+        pawnMenu.add(newPawn);
+
+        menuBar.add(pawnMenu);
 
         manage.setText("Manage");
 
@@ -367,6 +384,29 @@ public class Main extends javax.swing.JFrame
         }
     }//GEN-LAST:event_editCustomerActionPerformed
 
+    private void newPawnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_newPawnActionPerformed
+    {//GEN-HEADEREND:event_newPawnActionPerformed
+       //Verify if the form is already loaded
+        boolean AlreadyLoaded = isLoaded("New Pawn");
+        if (AlreadyLoaded == false)
+        {
+            frmNewPawn = new FrmNewPawn();
+            desktopPane.add(frmNewPawn);
+            //Load the Form
+            frmNewPawn.setVisible(true);
+            frmNewPawn.show();
+            try
+            {
+                frmNewPawn.setIcon(false);
+                frmNewPawn.setSelected(true);
+            }
+            catch (Exception e)
+            {
+                logger.log(Level.SEVERE, "Error displaying the form.", e);
+            }
+        }
+    }//GEN-LAST:event_newPawnActionPerformed
+
     /**
      * This function checks if a specified form is already displayed. It accepts
      * the window title in the form of a string and checks if it is already
@@ -476,7 +516,9 @@ public class Main extends javax.swing.JFrame
     private javax.swing.JMenuItem idTypeList;
     private javax.swing.JMenu manage;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem newPawn;
     private javax.swing.JMenuItem occupationList;
+    private javax.swing.JMenu pawnMenu;
     private javax.swing.JMenuItem salutationList;
     private org.jdesktop.swingx.JXStatusBar statusBar;
     private javax.swing.JMenuItem viewCustomer;

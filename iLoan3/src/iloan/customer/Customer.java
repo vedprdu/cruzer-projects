@@ -256,4 +256,29 @@ public class Customer
         }
         return customer;
     }
+
+    public static String getFullNameByID(int custID)
+    {
+        String fullName = "";
+        try
+        {
+            String sql = " SELECT CONCAT_WS(' ',`custSalutation`,`custFirstName`,`custLastName`) AS 'fullName' FROM `customer` WHERE `custID` = ?;";
+            PreparedStatement prep = Environment.getConnection().prepareStatement(sql);
+            prep.setInt(1, custID);
+            ResultSet rs = prep.executeQuery();
+            while (rs.next())
+            {
+                fullName = rs.getString("fullName");
+            }
+            rs.close();
+            prep.close();
+        }
+        catch (Exception e)
+        {
+            String message = "An error occurred while retreiving the customer's full name.";
+            logger.log(Level.SEVERE, message, e);
+        }
+        return fullName;
+
+    }
 }

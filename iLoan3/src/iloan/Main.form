@@ -66,6 +66,24 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="pawnMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pawns"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="newPawn">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/iloan/resources/ruby_add.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="New Pawn"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newPawnActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="manage">
           <Properties>
             <Property name="text" type="java.lang.String" value="Manage"/>
